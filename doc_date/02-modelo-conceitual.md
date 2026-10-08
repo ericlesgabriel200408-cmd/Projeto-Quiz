@@ -1,15 +1,21 @@
-| **Entidade**    | **Atributos**                                     | **Identificador** |
-| --------------- | ------------------------------------------------- | ----------------- |
-| **Usuário**     | nome, e-mail                                      | e-mail            |
-| **Pergunta**    | código, enunciado, nível de dificuldade, surpresa | código            |
-| **Tema**        | nome                                              | nome              |
-| **Alternativa** | letra, texto, correta                             | letra + Pergunta  |
+| Entidade                 | Atributos                             | Identificador   |
+| ------------------------ | ------------------------------------- | --------------- |
+| **Questão**              | código, título, enunciado, explicação | código          |
+| **Assunto**              | nome                                  | nome            |
+| **Nível de dificuldade** | código, descrição                     | código          |
+| **Alternativa**          | letra, texto, correta                 | letra + questão |
+| **Referência**           | título, URL, idioma                   | URL             |
+| **Editora**              | nome                                  | nome            |
+| **Idioma**               | código, descrição                     | código          |
+| **Palavra-chave**        | termo                                 | termo           |
 
-| **Relacionamento**                          | **Cardinalidade**                  | **Justificativa**                                                                                 | **Requisito**    |
-| ------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------- |
-| **Usuário realiza Quiz**                    | Usuário (0,N) — Quiz (1,1)         | O sistema deve permitir o cadastro do usuário e disponibilizar o Quiz para ele.                   | RA01, RA02       |
-| **Pergunta pertence a Tema**                | Pergunta (1,1) — Tema (1,N)        | Cada pergunta pertence a um dos temas definidos para o Quiz.                                      | RD02             |
-| **Pergunta possui Alternativa**             | Pergunta (4,4) — Alternativa (1,1) | Cada pergunta possui exatamente quatro alternativas.                                              | RD03             |
-| **Pergunta possui uma alternativa correta** | Pergunta (1,1) — Alternativa (0,1) | Cada pergunta possui exatamente uma alternativa correta.                                          | RD04             |
-| **Usuário responde Pergunta**               | Usuário (0,N) — Pergunta (0,N)     | O usuário responde às perguntas durante a execução do Quiz, podendo realizar até duas tentativas. | RD11, RA03       |
-| **Usuário recebe pontuação**                | Usuário (0,N) — Pontuação (1,1)    | A pontuação é calculada conforme a forma de resposta e apresentada ao final do Quiz.              | RD10, RA06, RA07 |
+
+| Relacionamento                          | Cardinalidade                       | Justificativa                                                                                                       | Requisito |
+| --------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------- |
+| **Questão pertence a Assunto**          | Questão (1,1) — Assunto (1,N)       | Toda questão pertence a exatamente um assunto. Não existem dois assuntos com o mesmo nome.                          | **RD02**  |
+| **Questão possui Nível de dificuldade** | Questão (1,1) — Nível (1,N)         | Toda questão possui exatamente um nível de dificuldade, pertencente a um conjunto controlado.                       | **RD03**  |
+| **Questão possui Alternativa**          | Questão (4,4) — Alternativa (1,1)   | Cada questão possui quatro alternativas, identificadas pelas letras A a D.                                          | **RD04**  |
+| **Questão é apoiada por Referência**    | Questão (1,1) — Referência (1,N)    | Cada questão cita uma única referência, e uma mesma referência pode amparar várias questões.                        | **RD06**  |
+| **Referência é publicada por Editora**  | Referência (1,1) — Editora (1,N)    | Cada referência é publicada por uma editora, e o nome da editora é gravado uma única vez.                           | **RD07**  |
+| **Referência possui Idioma**            | Referência (1,1) — Idioma (1,N)     | O idioma da referência pertence a um conjunto controlado.                                                           | **RD08**  |
+| **Questão possui Palavra-chave**        | Questão (0,N) — Palavra-chave (0,N) | Cada questão pode receber zero ou mais palavras-chave, e uma mesma palavra-chave pode ser usada em várias questões. | **RD09**  |
