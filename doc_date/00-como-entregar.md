@@ -7,8 +7,8 @@ Identifiquem uma vez, neste arquivo copiado para o repositório:
 
 | Campo       | Preenchimento |
 | ----------- | ------------- |
-| Equipe      |   13            |
-| Integrantes |Vinicius Ian Alves de Morais,Samuel Silva de Oliveira,Ericles Gabriel Clemente Queiroz,Samuel Vitor Alves de Carvalho,Johann de Carvalho dos Santos      |
+| Equipe      |   13          |
+| Integrantes |Vinicius Ian Alves de Morais, Samuel Silva de Oliveira, Ericles Gabriel Clemente Queiroz, Samuel Vitor Alves de Carvalho,Johann de Carvalho dos Santos      |
 | Repositório | https://github.com/ericlesgabriel200408-cmd/Projeto-Quiz.git              |
 | Data        | 04/10/2026              |
 
