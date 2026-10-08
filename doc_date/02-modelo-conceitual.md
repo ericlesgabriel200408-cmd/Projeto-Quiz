@@ -1,21 +1,15 @@
-# Passo 4 — Modelo conceitual
+| **Entidade**    | **Atributos**                                     | **Identificador** |
+| --------------- | ------------------------------------------------- | ----------------- |
+| **Usuário**     | nome, e-mail                                      | e-mail            |
+| **Pergunta**    | código, enunciado, nível de dificuldade, surpresa | código            |
+| **Tema**        | nome                                              | nome              |
+| **Alternativa** | letra, texto, correta                             | letra + Pergunta  |
 
-Marco M1. A entrega deste passo é o modelo conceitual: o desenho em `entregas/02-conceitual.pdf` (ou `.png`) e as tabelas abaixo.
-
-É um DER na notação de Chen, no brModelo ou no Visual Paradigm Online. Entidades, atributos, relacionamentos e cardinalidades. Ainda não aparecem tabela, chave estrangeira nem tipo de coluna: isso é o modelo lógico, no passo 5.
-
-## Entidades
-
-| Entidade | Atributos | Identificador |
-| --- | --- | --- |
-| | | |
-
-## Relacionamentos
-
-Uma frase por linha, ligada a um requisito. Cardinalidade dos dois lados, mínimo e máximo.
-
-| Relacionamento | Cardinalidade | Justificativa | Requisito |
-| --- | --- | --- | --- |
-| | | | RD__ |
-
-O diagrama e esta tabela descrevem o mesmo modelo. Toda entidade do desenho está na tabela.
+| **Relacionamento**                          | **Cardinalidade**                  | **Justificativa**                                                                                 | **Requisito**    |
+| ------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------- |
+| **Usuário realiza Quiz**                    | Usuário (0,N) — Quiz (1,1)         | O sistema deve permitir o cadastro do usuário e disponibilizar o Quiz para ele.                   | RA01, RA02       |
+| **Pergunta pertence a Tema**                | Pergunta (1,1) — Tema (1,N)        | Cada pergunta pertence a um dos temas definidos para o Quiz.                                      | RD02             |
+| **Pergunta possui Alternativa**             | Pergunta (4,4) — Alternativa (1,1) | Cada pergunta possui exatamente quatro alternativas.                                              | RD03             |
+| **Pergunta possui uma alternativa correta** | Pergunta (1,1) — Alternativa (0,1) | Cada pergunta possui exatamente uma alternativa correta.                                          | RD04             |
+| **Usuário responde Pergunta**               | Usuário (0,N) — Pergunta (0,N)     | O usuário responde às perguntas durante a execução do Quiz, podendo realizar até duas tentativas. | RD11, RA03       |
+| **Usuário recebe pontuação**                | Usuário (0,N) — Pontuação (1,1)    | A pontuação é calculada conforme a forma de resposta e apresentada ao final do Quiz.              | RD10, RA06, RA07 |
