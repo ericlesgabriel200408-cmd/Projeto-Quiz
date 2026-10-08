@@ -23,7 +23,7 @@ O questionário é composto por um total de **30 perguntas** selecionadas de for
   * Retirar 2 respostas incorretas
   * Mostrar diretamente a resposta correta
 * **Dificuldade Progressiva:** O grau de dificuldade aumenta (fácil, médio, avançado) à medida que o utilizador avança nas respostas certas
-* **Cronômetro (Em debate):** Está a ser estudada a implementação de um cronômetro decrescente que pausa quando a explicação detalhada da resposta aparece
+* **Cronômetro:** O cronometro serve apenas como indicador de tempo durante todo o quiz, sendo disponivel a visualização dele apenas no final, junto ao ranking de pontuação
 
 ---
 
