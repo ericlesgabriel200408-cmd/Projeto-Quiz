@@ -41,20 +41,33 @@ Ao finalizar todas as perguntas, o sistema apresenta o resultado final da partid
 > 
 
 ## 3. Requisitos e regras de negócio
+| Código   | Categoria        | Item / Regra                                                                                                                                 |
+| -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **RD01** | Regra de Negócio | O Quiz possui exatamente **32 perguntas** em uma partida.                                                                                    |
+| **RD02** | Regra de Negócio | As perguntas são distribuídas entre **4 temas definidos pelos criadores do sistema**.                                                        |
+| **RD03** | Regra de Negócio | Cada pergunta possui exatamente **4 alternativas de resposta**.                                                                              |
+| **RD04** | Regra de Negócio | Cada pergunta possui **uma única alternativa correta**.                                                                                      |
+| **RD05** | Regra de Negócio | As perguntas são **cadastradas pelos criadores do sistema** e não são geradas automaticamente pelo banco de dados.                           |
+| **RD06** | Regra de Negócio | O Quiz não possui **perguntas repetidas**.                                                                                                   |
+| **RD07** | Regra de Negócio | As alternativas de uma mesma pergunta não são repetidas.                                                                                     |
+| **RD08** | Regra de Negócio | As perguntas possuem nível de dificuldade **fácil, médio ou avançado**.                                                                      |
+| **RD09** | Regra de Negócio | O Quiz possui **2 perguntas surpresa**, com valor de **5 pontos cada**.                                                                      |
+| **RD10** | Regra de Negócio | A pontuação é definida pela forma de resposta: **3 pontos na primeira tentativa, 2 pontos utilizando ajuda e 1 ponto na segunda tentativa**. |
+| **RD11** | Regra de Negócio | Cada pergunta permite até **2 tentativas**, e cada opção de ajuda pode ser utilizada **uma vez durante o Quiz**.
 
-Cada RD01–RD11 e cada RA01–RA07 entra numa linha. Não deixem código de fora.
+| Código   | Categoria           | Item / Requisito                                                                                                    |
+| -------- | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **RA01** | Requisito Funcional | O sistema deve permitir o **cadastro do usuário**.                                                                  |
+| **RA02** | Requisito Funcional | O sistema deve disponibilizar as opções **Iniciar, Regras, Créditos e Ranking**.                                    |
+| **RA03** | Requisito Funcional | O sistema deve exibir o **enunciado, as alternativas e as opções de ajuda** de cada pergunta.                       |
+| **RA04** | Requisito Funcional | O sistema deve permitir o uso das opções de ajuda **eliminar duas alternativas** ou **mostrar a resposta correta**. |
+| **RA05** | Requisito Funcional | O sistema deve apresentar **feedback com a resposta, explicação e exemplo** após a resposta do usuário.             |
+| **RA06** | Requisito Funcional | O sistema deve **calcular a pontuação** conforme as regras definidas para cada resposta.                            |
+| **RA07** | Requisito Funcional | O sistema deve **exibir a pontuação final ao término do Quiz**.                                                     ||
 
-Categoria/ ItemRegras de Negócio (RN)
-Estrutura: 30 perguntas divididas em 4 temas + 2 perguntas surpresa.Alternativas: Cada pergunta possui 4 opções.Tentativas: Até 2 tentativas por pergunta.Pontuação: Máximo de 100 pontos (90 corridas + 10 das surpresas).Critério de Pontuação: 3 pontos (1ª tentativa), 2 pontos (com ajuda), 1 ponto (2ª tentativa).Exibição de Pontuação: Acumulada de forma oculta e revelada apenas ao final.Ajuda: 2 opções (eliminar 2 erradas ou mostrar a correta), utilizáveis apenas 1 vez cada no quiz inteiro.Dificuldade: Progressiva (fácil, médio e avançado).Cronômetro (Em debate): Decrescente, pausado durante o feedback, encerra o jogo caso zere.
-
-Requisitos Funcionais (RF)
-Cadastro de usuário na tela inicial. Navegação para Iniciar, Regras, Créditos e Ranking.
-Exibição de enunciado, alternativas e ajudas. Aplicação do recurso de ajuda escolhido.
-Feedback visual com explicação/exemplo completo após a resposta.
-Controle de tempo regressivo e pausa automática (se implementado).
-Cálculo e exibição da pontuação final.
-
-Requisitos Não Funcionais (RNF)	
-Acessibilidade Visual: Paleta de cores com contraste adequado.
-Acessibilidade Motora: Navegação completa por teclado (Tab e Enter).
-Design/Interface: Balões retangulares de bordas arredondadas e elementos visuais tematizados (tecnologia e jogos).
+| Código    | Categoria      | Requisito                                                                                                |
+| --------- | -------------- | -------------------------------------------------------------------------------------------------------- |
+| **RNF01** | Acessibilidade | O sistema deve utilizar **cores com contraste adequado** para facilitar a visualização das informações.  |
+| **RNF02** | Acessibilidade | O sistema deve permitir **navegação por teclado utilizando Tab e Enter**.                                |
+| **RNF03** | Interface      | A interface deve utilizar **elementos retangulares com bordas arredondadas** para perguntas e respostas. |
+| **RNF04** | Interface      | A interface deve utilizar **elementos visuais relacionados aos temas de tecnologia e jogos**.            |
