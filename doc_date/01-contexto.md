@@ -1,23 +1,28 @@
 # Passos 1 a 3 — Contexto, minimundo e requisitos
 
-Marco M1. Copiem para `entregas/01-contexto.md`.
-
 ## 1. Introdução e contexto
 
-Em um parágrafo: o que é o Tech Trivia e qual o objetivo deste banco.
-O Tech Trivia é um jogo Quiz com 32 perguntas, tendo seu sistema de pontuação de acordo com a respsota correta, O objetivo do banco é armazenar e organizar os dados dos usuários,pontuações e ranks
-Escopo. Listem só o que o banco faz e o que fica de fora.
-Ela lista o nome do usuário, idade,pontução do usuário e o rank final dos usuários para calcular a média de potuação geral, fica de fora as perguntas e resposta que ficam diretamente nas linhas de códigos
+O Tech Trivia é um jogo Quiz com 32 perguntas, tendo seu sistema de pontuação de acordo com as respostas corretas, em seguida também conta com um sistema que disponibiliza fontes e explicação das perguntas.
+Possui sistemas de ajuda e tempo de conclusão do quiz.
+
+O objetivo do banco é armazenar e organizar os dados dos usuários, pontuações e ranks. Ela lista o nome do usuário, idade, pontução do jogador e o rank final dos jogadores para calcular a média de potuação geral, ficando de fora do banco perguntas e resposta, que ficam diretamente nas linhas de códigos.
+
+
+## 1.1 Escopo
+A tabela a seguir apresenta as responsabilidades do banco de dados e o que está fora do seu escopo.
 
 | O banco faz | O banco não faz |
-| armazena cadstro de usuário(nome,senha),pontuação,rank   | não armazena perguntas,não armazena resposta, |
-| | |
+|---|---|
+| Armazena cadastro de usuário. Nome, senha, pontuação e rank.   |Armazenamento de perguntas, respostas, imagens e interface gráfica.  |
+| Permite pesquisa por palavra chave. | 
 
-Usuários. Quem usa o sistema e o que cada um faz com os dados. Não criem tabela de usuário se nenhum requisito pedir cadastro, senha ou sessão.
+## 1.2 Usuários
 
 | Usuário | O que faz |
-| Jogador | responde as perguntas com o objetivo de aumentar a pontuação|
-| Quem cadastra perguntas |Fiscaliza as reposta completa e atividades dos jogadores |
+|---|---|
+| Jogador             | lê as perguntas e escolhe uma alternativa dentre as existentes, consulta a explicação e fonte após(resposta: certa ou errada) |
+| desenvolvedor |Responsavel pela criação do quiz, cadastro, alteração e exclusão de questões, alternativas, categorias, níveis de dificuldade, referências e palavras-chave.
+
 
 ## 2. Minimundo
 Minimundo – Projeto Quiz
@@ -41,33 +46,45 @@ Ao finalizar todas as perguntas, o sistema apresenta o resultado final da partid
 > 
 
 ## 3. Requisitos e regras de negócio
-| Código   | Categoria        | Item / Regra                                                                                                                                 |
-| -------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| **RD01** | Regra de Negócio | O Quiz possui exatamente **32 perguntas** em uma partida.                                                                                    |
-| **RD02** | Regra de Negócio | As perguntas são distribuídas entre **4 temas definidos pelos criadores do sistema**.                                                        |
-| **RD03** | Regra de Negócio | Cada pergunta possui exatamente **4 alternativas de resposta**.                                                                              |
-| **RD04** | Regra de Negócio | Cada pergunta possui **uma única alternativa correta**.                                                                                      |
-| **RD05** | Regra de Negócio | As perguntas são **cadastradas pelos criadores do sistema** e não são geradas automaticamente pelo banco de dados.                           |
-| **RD06** | Regra de Negócio | O Quiz não possui **perguntas repetidas**.                                                                                                   |
-| **RD07** | Regra de Negócio | As alternativas de uma mesma pergunta não são repetidas.                                                                                     |
-| **RD08** | Regra de Negócio | As perguntas possuem nível de dificuldade **fácil, médio ou avançado**.                                                                      |
-| **RD09** | Regra de Negócio | O Quiz possui **2 perguntas surpresa**, com valor de **5 pontos cada**.                                                                      |
-| **RD10** | Regra de Negócio | A pontuação é definida pela forma de resposta: **3 pontos na primeira tentativa, 2 pontos utilizando ajuda e 1 ponto na segunda tentativa**. |
-| **RD11** | Regra de Negócio | Cada pergunta permite até **2 tentativas**, e cada opção de ajuda pode ser utilizada **uma vez durante o Quiz**.
 
-| Código   | Categoria           | Item / Requisito                                                                                                    |
-| -------- | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **RA01** | Requisito Funcional | O sistema deve permitir o **cadastro do usuário**.                                                                  |
-| **RA02** | Requisito Funcional | O sistema deve disponibilizar as opções **Iniciar, Regras, Créditos e Ranking**.                                    |
-| **RA03** | Requisito Funcional | O sistema deve exibir o **enunciado, as alternativas e as opções de ajuda** de cada pergunta.                       |
-| **RA04** | Requisito Funcional | O sistema deve permitir o uso das opções de ajuda **eliminar duas alternativas** ou **mostrar a resposta correta**. |
-| **RA05** | Requisito Funcional | O sistema deve apresentar **feedback com a resposta, explicação e exemplo** após a resposta do usuário.             |
-| **RA06** | Requisito Funcional | O sistema deve **calcular a pontuação** conforme as regras definidas para cada resposta.                            |
-| **RA07** | Requisito Funcional | O sistema deve **exibir a pontuação final ao término do Quiz**.                                                     ||
+Esta seção reúne as regras de negócio, os requisitos funcionais e os requisitos não funcionais do sistema.
 
-| Código    | Categoria      | Requisito                                                                                                |
-| --------- | -------------- | -------------------------------------------------------------------------------------------------------- |
-| **RNF01** | Acessibilidade | O sistema deve utilizar **cores com contraste adequado** para facilitar a visualização das informações.  |
-| **RNF02** | Acessibilidade | O sistema deve permitir **navegação por teclado utilizando Tab e Enter**.                                |
-| **RNF03** | Interface      | A interface deve utilizar **elementos retangulares com bordas arredondadas** para perguntas e respostas. |
-| **RNF04** | Interface      | A interface deve utilizar **elementos visuais relacionados aos temas de tecnologia e jogos**.            |
+### 3.1 Regras de negócio
+
+| Código | Texto do requisito | Tipo |
+|---|---|---|
+| RD01 | Toda questão possui um código único, título, enunciado e explicação, todos obrigatórios. | Regra de negócio |
+| RD02 | Toda questão pertence a uma categoria dentre as 4 cateogiras existentes | Regra de negócio |
+| RD03 | Toda questão pertence a um nivel de difilculdade, sendo ela progressiva, começando fácil e progressivamente aumentando o nivel de dificuldade | Regra de negócio |
+| RD04 | Toda questão possui alternativas identificadas por letras, cada uma com seu texto. | Regra de negócio |
+| RD05 | Exatamente uma alternativa de cada questão é correta. | Regra de negócio |
+| RD06 | Cada questão pode possuir zero ou mais palavras-chave. | Regra de negócio |
+| RD07 | Cada jogador possui um nome de identificação e pode acumular pontuações. | Regra de negócio |
+| RD08 | O ranking deve ser organizado com base nas pontuações registradas dos jogadores. | Regra de negócio |
+| RD09 | Opção de ajuda contendo 1 ajuda que elimina 2 respostas erradas  | Regra de negócio |
+| RD10 | Cronometro funcional identificando o tempo de conclusão final, presente no ranking  | Regra de negócio |
+
+### 3.2 Requisitos funcionais
+
+| Código | Texto do requisito | Tipo |
+|---|---|---|
+| RF01 | O sistema deve permitir cadastrar questões. | Funcional |
+| RF02 | O sistema deve permitir consultar questões por categoria. | Funcional |
+| RF03 | O sistema deve permitir filtrar questões por nível de dificuldade. | Funcional |
+| RF04 | O sistema deve permitir consultar as alternativas e os gabaritos. | Funcional |
+| RF05 | O sistema deve permitir alterar e excluir questões. | Funcional |
+
+### 3.3 Requisitos não funcionais
+
+| Código | Texto do requisito | Tipo |
+|---|---|---|
+| RNF01 | O banco de dados deve utilizar PostgreSQL. | Não funcional |
+| RNF02 | O banco de dados deve garantir a integridade dos dados. | Não funcional |
+| RNF03 | O banco de dados deve evitar registros duplicados nas informações que exigem unicidade. | Não funcional |
+
+### 3.4 Classificação dos requisitos
+
+- **Funcional:** descreve uma ação ou serviço que o sistema deve oferecer.
+- **Não funcional:** define uma característica, restrição ou condição de qualidade do sistema, como o SGBD utilizado e a integridade dos dados.
+- **Regra de negócio:** estabelece uma condição ou regra que os dados e as operações do sistema devem respeitar.
+
