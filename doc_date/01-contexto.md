@@ -20,10 +20,24 @@ Usuários. Quem usa o sistema e o que cada um faz com os dados. Não criem tabel
 | Quem cadastra perguntas |Fiscaliza as reposta completa e atividades dos jogadores |
 
 ## 2. Minimundo
+Minimundo – Projeto Quiz
 
-Um ou dois parágrafos, na voz de quem encomenda o sistema. É deste texto que saem as entidades e as regras. Cubram pergunta, categoria, fonte, publicador, idioma e alternativas, inclusive a possibilidade de mais de duas alternativas no futuro.
-Somos um grupo de estudantes desenvolvendo um jogo Quiz com o intuito de facilitar os estudos com perguntas rápidas e práticas, com 4 temas definidos sendo eles abordados no dia a dia
-sendo cada pergunta com 4 alternativas de escolhas, não tem perguntas e resposta repetidas , as perguntas são feitas pelos criadores do sistema o banco não gera nenhuma pergunta automaticamente.
+O sistema consiste em um jogo de perguntas e respostas (Quiz) desenvolvido por um grupo de estudantes com o objetivo de facilitar os estudos de forma rápida, prática e interativa. O sistema permite que o usuário se cadastre, acesse o Quiz, responda perguntas de diferentes temas e acompanhe sua pontuação ao final da partida.
+
+O Quiz possui quatro temas principais: Streaming, Jogos Online & Gamification; Inteligência Artificial no Dia a Dia; Smartphones, Dispositivos Mobile & Baterias; e Privacidade Digital, Golpes Virtuais & Senhas. Cada tema possui perguntas elaboradas pelos próprios criadores do sistema. O banco de dados não gera perguntas automaticamente, sendo todas as questões previamente cadastradas pelos responsáveis pelo projeto.
+
+Cada partida possui 30 perguntas, sendo que cada questão apresenta quatro alternativas de resposta. O usuário pode ter até duas tentativas para responder uma pergunta e também possui recursos de ajuda, podendo escolher entre eliminar duas alternativas ou mostrar a resposta correta, com uso limitado durante o Quiz.
+
+As perguntas possuem diferentes níveis de dificuldade, começando pelo nível fácil e podendo avançar para médio e avançado conforme o desempenho do usuário. Também existem duas perguntas surpresa, que possuem uma pontuação diferenciada de 5 pontos cada.
+
+O sistema possui um mecanismo de pontuação, no qual o usuário recebe mais pontos quando responde corretamente na primeira tentativa. Uma resposta correta na primeira tentativa vale 3 pontos, uma resposta utilizando ajuda vale 2 pontos e uma resposta correta na segunda tentativa vale 1 ponto. A pontuação é acumulada durante a partida e apresentada ao usuário ao final do Quiz.
+
+Além do sistema de perguntas, o Quiz possui uma tela inicial com cadastro de usuário, seguida de uma tela principal contendo opções como iniciar o jogo, visualizar as regras, créditos e ranking de pontuação. O sistema também busca oferecer acessibilidade por meio de contraste adequado de cores e navegação utilizando as teclas Tab e Enter.
+
+Após o usuário selecionar uma alternativa, o sistema apresenta a resposta e uma explicação completa, permitindo que o jogador compreenda o conteúdo mesmo quando responder incorretamente. Em seguida, o usuário pode utilizar o botão de continuar para avançar para a próxima pergunta.
+
+Ao finalizar todas as perguntas, o sistema apresenta o resultado final da partida, permitindo que o usuário conheça sua pontuação e possa participar do ranking. Dessa forma, o sistema busca unir aprendizado, competição e gamificação, tornando o processo de estudo mais dinâmico e acessível.
+
 > 
 
 ## 3. Requisitos e regras de negócio
