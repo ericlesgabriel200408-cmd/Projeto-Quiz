@@ -26,7 +26,7 @@ O sistema consiste em um jogo de perguntas e respostas (Quiz) desenvolvido por u
 
 O Quiz possui quatro temas principais: Streaming, Jogos Online & Gamification; Inteligência Artificial no Dia a Dia; Smartphones, Dispositivos Mobile & Baterias; e Privacidade Digital, Golpes Virtuais & Senhas. Cada tema possui perguntas elaboradas pelos próprios criadores do sistema. O banco de dados não gera perguntas automaticamente, sendo todas as questões previamente cadastradas pelos responsáveis pelo projeto.
 
-Cada partida possui 30 perguntas, sendo que cada questão apresenta quatro alternativas de resposta. O usuário pode ter até duas tentativas para responder uma pergunta e também possui recursos de ajuda, podendo escolher entre eliminar duas alternativas ou mostrar a resposta correta, com uso limitado durante o Quiz.
+Cada partida possui 32 perguntas, sendo que cada questão apresenta quatro alternativas de resposta. O usuário pode ter até duas tentativas para responder uma pergunta e também possui recursos de ajuda, podendo escolher entre eliminar duas alternativas ou mostrar a resposta correta, com uso limitado durante o Quiz.
 
 As perguntas possuem diferentes níveis de dificuldade, começando pelo nível fácil e podendo avançar para médio e avançado conforme o desempenho do usuário. Também existem duas perguntas surpresa, que possuem uma pontuação diferenciada de 5 pontos cada.
 
