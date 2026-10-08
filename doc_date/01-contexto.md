@@ -14,7 +14,8 @@ A tabela a seguir apresenta as responsabilidades do banco de dados e o que está
 | O banco faz | O banco não faz |
 |---|---|
 | Armazena cadastro de usuário. Nome, senha, pontuação e ranking.   |Armazenamento de perguntas, respostas, imagens e interface gráfica.  |
-| Permite pesquisa por palavra chave. | 
+| Permite pesquisa por palavra chave. | Realiza, por si só, o ensino ou a explicação dos conteúdos. |
+
 
 ## 1.2 Usuários
 
