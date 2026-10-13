@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- Atenção aqui ele vai rodar com estilo de letra que está baixado nos pc, pode mudar de pc pra pc   -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Quiz Tech</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="main-header">
+    <h1>PROJETO QUIZ TECH</h1>
+  </header>
+
+  <main class="app-container">
+
+    <section id="screen-register" class="card-screen active">
+      <div class="card-header">
+        <h2>ENTRAR NO QUIZ TECH</h2>
+        <p class="subtitle">Insira seus dados para continuar.</p>
+      </div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <input type="text" id="input-name" placeholder="Nome Completo" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" id="input-email" placeholder="E-mail" required>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="input-cpf"
+            placeholder="CPF (000.000.000-00)"
+            maxlength="14"
+            oninput="formatCPF(this)"
+            required
+          >
+        </div>
+
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="chk-terms" required>
+          <label for="chk-terms">
+            Declaro que as informações cadastradas estão corretas.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary">CONTINUAR</button>
+      </form>
+
+      <div class="guest-option">
+        <span class="divider-text">ou</span>
+        <button type="button" class="btn-guest" id="btn-guest-login">
+          Entrar como Convidado
+        </button>
+      </div>
+    </section>
+
+    <section id="screen-menu" class="card-screen">
+      <div class="menu-card">
+        <h2>MENU PRINCIPAL</h2>
+
+        <p class="subtitle">
+          Olá, <strong id="menu-player-name">Usuário</strong>
+          <span id="menu-player-info"></span>
+        </p>
+
+        <button type="button" class="btn-primary" id="btn-start-game">
+          INICIAR QUIZ
+        </button>
+
+        <button type="button" class="btn-secondary" id="btn-show-rules">
+          REGRAS
+        </button>
+
+        <button type="button" class="btn-secondary" id="btn-show-credits">
+          CRÉDITOS
+        </button>
+
+        <button
+          type="button"
+          class="btn-guest"
+          id="btn-back-register"
+          onclick="showScreen('screen-register')"
+        >
+          VOLTAR AO CADASTRO
+        </button>
+      </div>
+    </section>
+
+    <section id="screen-rules" class="card-screen">
+      <h2>REGRAS DO QUIZ</h2>
+
+      <ul class="rules-list">
+        <li>Cada pergunta normal vale até <strong>3 pontos</strong>.</li>
+        <li>As duas perguntas bônus valem até <strong>5 pontos</strong> cada.</li>
+        <li>Você tem <strong>20 segundos</strong> para responder cada pergunta.</li>
+        <li>Resposta errada ou tempo esgotado vale 0 ponto.</li>
+        <li>Usar uma ajuda na pergunta reduz o valor máximo dela em 1 ponto; duas ajudas reduzem em 2 pontos. O mínimo por acerto é 1 ponto.</li>
+        <li><strong>Pular pergunta:</strong> até 3 vezes. As perguntas puladas voltam no fim.</li>
+        <li><strong>Remover 2 alternativas:</strong> até 2 vezes por partida.</li>
+        <li><strong>Mostrar a correta:</strong> 1 vez por partida; ainda é necessário clicar na alternativa para responder.</li>
+        <li>Você pode sair da partida usando “Abandonar quiz”; será solicitada confirmação.</li>
+      </ul>
+
+      <button type="button" class="btn-primary" id="btn-back-menu">
+        VOLTAR AO MENU
+      </button>
+    </section>
+
+    <section id="screen-credits" class="card-screen">
+      <h2>CRÉDITOS</h2>
+
+      <p>
+        <strong>Integrantes:</strong>
+        Ericles Q., Samuel O., Samuel C. Vinicius M. e Johhann S.
+      </p>
+
+      <p>
+        <strong>Disciplina:</strong>
+        Desenvolvimento Frontend para Web, Modelagem de Banco de Dados, Algoritmos e Pensamento Computacional, Design Profissional
+      </p>
+
+      <p>
+        <strong>Projeto:</strong>
+        Quiz Tech — conhecimentos de tecnologia.
+      </p>
+
+      <button type="button" class="btn-primary" id="btn-back-menu-credits">
+        VOLTAR AO MENU
+      </button>
+    </section>
+
+    <section id="screen-quiz" class="card-screen">
+      <div class="quiz-topbar">
+        <span id="question-timer" class="timer-pill">Tempo: 20s</span>
+
+        <span class="timer-total">
+          Tempo total: <strong id="total-timer">00:00</strong>
+        </span>
+
+        <button type="button" class="btn-abandon" id="btn-exit-quiz">
+          ABANDONAR QUIZ
+        </button>
+      </div>
+
+      <div class="quiz-layout">
+        <div class="quiz-main-area">
+          <div class="question-badge-header">
+            <span id="quiz-topic-title">QUIZ TECH: ÁREA DA TECNOLOGIA</span>
+            <span id="question-progress">Pergunta 01</span>
+            <span class="points-tag" id="question-points">
+              (Vale até 3 pontos)
+            </span>
+          </div>
+
+          <h2 id="question-text" class="question-title">
+            Carregando pergunta...
+          </h2>
+
+          <div class="options-container" id="options-container"></div>
+
+          <div
+            id="answer-feedback"
+            class="answer-feedback"
+            hidden
+            aria-live="polite"
+          >
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-explanation"></p>
+
+            <button type="button" class="btn-primary" id="btn-next-question">
+              PRÓXIMA PERGUNTA
+            </button>
+          </div>
+        </div>
+
+        <aside class="quiz-sidebar">
+          <div class="sidebar-box ranking-box">
+            <h3>RANKING DEMONSTRATIVO</h3>
+
+            <ol id="ranking-list">
+              <li>1. Ericles G. (87 pts)</li>
+              <li>2. Samuel O. (75 pts)</li>
+              <li>3. Samuel C. (62 pts)</li>
+            </ol>
+          </div>
+
+          <div class="sidebar-box player-status-box">
+            <p>
+              Jogador:
+              <strong id="player-display-name">Usuário</strong>
+              <br>
+              <span id="player-display-info"></span>
+            </p>
+
+            <p class="current-score-text">
+              Pontuação atual:
+              <span id="current-score">0</span> pts
+            </p>
+
+            <p class="help-system-title">AJUDAS DISPONÍVEIS</p>
+
+            <div class="help-buttons help-buttons-stack">
+              <button type="button" class="btn-help" id="btn-skip">
+                Pular (3)
+              </button>
+
+              <button type="button" class="btn-help" id="btn-hint">
+                Remover 2 (2)
+              </button>
+
+              <button type="button" class="btn-help" id="btn-reveal">
+                Mostrar correta (1)
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="screen-feedback" class="card-screen">
+      <div class="feedback-card">
+        <span class="feedback-badge">FEEDBACK DETALHADO</span>
+
+        <h2>RESULTADO FINAL</h2>
+
+        <div class="score-highlight">
+          SEU SCORE: <span id="final-score">0</span> pts.
+        </div>
+
+        <div class="bonus-box">
+          <p><strong>Perguntas bônus:</strong></p>
+          <p id="bonus-points-text">Pontos bônus conquistados.</p>
+        </div>
+
+        <div class="summary-details">
+          <p>Tempo final: <span id="final-time">00:00</span></p>
+
+          <p>
+            Ranking:
+            <span id="ranking-position">—</span>
+            <br>
+            <small>(Pontuação desta partida)</small>
+          </p>
+        </div>
+
+        <div class="answers-review">
+          <h3>Resumo das respostas:</h3>
+          <p class="review-hint">Confira seus acertos e erros.</p>
+          <ul id="answers-summary-list"></ul>
+        </div>
+
+        <button type="button" class="btn-primary" id="btn-restart">
+          VOLTAR AO MENU
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="main-footer">
+    <div class="credits-box">
+      <p><strong>PROJETO:</strong> Quiz Tech</p>
+      <p>
+        <strong>DISCIPLINA:</strong>
+        Desenvolvimento Frontend para Web, Modelagem de Banco de Dados, Algoritmos e Pensamento Computacional, Design Profissional.
+      </p>
+    </div>
+  </footer>
+
+  <script src="question.js"></script>
+</body>
+</html>
