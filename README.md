@@ -1,15 +1,15 @@
 # Projeto-Quiz
-# Projeto Quiz (Nome em Aberto)
+# Projeto Quiz (Nome em Aberto ainda)
 
 ## Sobre o Projeto
-O **Projeto Quiz** está a ser desenvolvido como um teste prático de conhecimento, tanto para estudantes como para aspirantes na área tecnológica[cite: 1]. O objetivo principal é a entrega final do curso superior de **Análise e Desenvolvimento de Sistemas**[cite: 1].
+O **Projeto Quiz** está a ser desenvolvido como um teste prático de conhecimento, tanto para estudantes como para aspirantes na área tecnológica. O objetivo principal é a entrega final do curso superior de **Análise e Desenvolvimento de Sistemas**.
 
 ---
 
 ## Estrutura e Tópicos do Quiz
-O questionário é composto por um total de **30 perguntas** selecionadas de forma colaborativa pelos membros da equipa[cite: 1]. Os temas abrangem[cite: 1]:
+O questionário é composto por um total de **30 perguntas + 2 Pergunta Bônus** selecionadas de forma colaborativa pelos membros da equipa. Os temas abrangem:
 
-1. **Streaming, Jogos Online & Gamification** – 8 Perguntas[cite: 1]
+1. **Streaming, Jogos Online & Gamification** – 8 Perguntas
 2. **Inteligência Artificial no Dia a Dia (Assistentes & Ferramentas)** – 8 Perguntas
 3. **Smartphones, Dispositivos Mobile & Baterias** – 8 Perguntas
 4. **Privacidade Digital, Golpes Virtuais & Senhas** – 8 Perguntas
@@ -18,12 +18,13 @@ O questionário é composto por um total de **30 perguntas** selecionadas de for
 ---
 
 ## Regras e Mecânica de Jogo
-* **Tentativas:** Cada questão possui 4 opções de resposta e o utilizador dispõe de até **2 tentativas** por pergunta
-* **Ajuda Disponível:** O jogador tem direito a **1 ajuda** durante todo o percurso do quiz, podendo escolher entre
+* **Tentativas:** Cada questão possui 4 opções de resposta e o utilizador dispõe de  **1 tentativas** por pergunta
+* **Ajuda Disponível:** O jogador tem direito a **ajuda** durante todo o percurso do quiz, podendo escolher entre
   * Retirar 2 respostas incorretas
   * Mostrar diretamente a resposta correta
+  * Pular pergunta par o final
 * **Dificuldade Progressiva:** O grau de dificuldade aumenta (fácil, médio, avançado) à medida que o utilizador avança nas respostas certas
-* **Cronômetro:** O cronometro serve apenas como indicador de tempo durante todo o quiz, sendo disponivel a visualização dele apenas no final, junto ao ranking de pontuação
+* **Cronômetro:** O cronometro de 20 segundos por perguntas de temporizador(ao zerar considera resposta errada) indicador de tempo durante todo o quiz, sendo disponivel a visualização dele ao meio da tela critério de desempate no ranking
 
 ---
 
@@ -31,17 +32,16 @@ O questionário é composto por um total de **30 perguntas** selecionadas de for
 O sistema foi concebido para somar um total geral de **100 pontos** (90 pontos corridos + 10 pontos extra nas perguntas finais)
 * **1ª Tentativa Correta:** 3 pontos
 * **Com Ajuda:** 2 pontos
-* **2ª Tentativa Correta:** 1 ponto
-* *Nota:* A pontuação funciona de forma corrida e é exibida apenas no final do jogo
+* **Com 2 Ajuda:** 1 ponto
+* *Nota:* A pontuação funciona de forma corrida e é exibida ao lado no painel e final do jogo
 
 ---
 
 ## Acessibilidade e Layout
 * **Acessibilidade:** Foco em acessibilidade visual (cores com contrastes adequados) e motora (navegação facilitada através das teclas `Tab` e `Enter`)
-* **Tela Inicial:** Cadastro de utilizador, botões de início, regras, créditos e ranking de pontuação
-* **Elementos Visuais:** Balões informativos em formato retangular com bordas arredondadas[cite: 1]. As explicações completas das respostas poderão ocupar um maior espaço no ecrã após a seleção
-* **Número da Questão:** Indicador circular posicionado no canto superior esquerdo antes do texto da pergunta
-* **Botão Continuar:** Formato circular, exibido juntamente com a resposta completa para garantir o tempo de leitura do utilizador
+* **Tela Inicial:** Cadastro de utilizador, botões de início, regras, créditos
+* **Elementos Visuais:** Balões informativos em formato retangular com bordas arredondadas. As explicações completas das respostas poderão ocupar um maior espaço no ecrã após a seleção
+* **Botão Próxima Pergunta:** Formato Quadrado, exibido juntamente com a resposta completa para garantir o tempo de leitura do utilizador
 
 ---
 
