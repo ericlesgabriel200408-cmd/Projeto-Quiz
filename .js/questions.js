@@ -13,7 +13,7 @@ const questionsData = [
       "Plataformas exclusivas para criação de jogos 3D"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const questionsData = [
       "Assinatura mensal de provedor local"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const questionsData = [
       "Virtualização de Processos"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const questionsData = [
     question: "Qual é a principal plataforma voltada para transmissões e streaming de jogos ao vivo?",
     options: ["Twitch", "Spotify", "Vimeo", "Steam"],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ const questionsData = [
       "Sincronização em nuvem ativa"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 6,
@@ -73,7 +73,7 @@ const questionsData = [
       "Acelera a taxa de atualização da tela (FPS)"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 7,
@@ -86,7 +86,7 @@ const questionsData = [
       "Caixas de texto e botões de envio"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 8,
@@ -99,7 +99,7 @@ const questionsData = [
       "Não, apenas jogos educativos cobram mensalidade"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 9,
@@ -112,7 +112,7 @@ const questionsData = [
       "Palavras simples em inglês sem símbolos"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 10,
@@ -125,7 +125,7 @@ const questionsData = [
       "Porque aumenta o consumo de memória RAM do dispositivo"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 11,
@@ -133,7 +133,7 @@ const questionsData = [
     question: "Como é chamado o golpe cibernético que engana pessoas para obter dados pessoais ou senhas?",
     options: ["Phishing", "Firewall", "Ransomware", "Defacing"],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 12,
@@ -146,7 +146,7 @@ const questionsData = [
       "Verificação de antivírus mensal"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 13,
@@ -159,7 +159,7 @@ const questionsData = [
       "Responder solicitando mais informações do remetente"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 14,
@@ -172,7 +172,7 @@ const questionsData = [
       "Histórico do navegador"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 15,
@@ -185,7 +185,7 @@ const questionsData = [
       "Somente em computadores sem sistema operacional"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 16,
@@ -198,7 +198,7 @@ const questionsData = [
       "Redução no limite de armazenamento em nuvem"
     ],
     answer: 0,
-    points: 2
+    points: 3
   },
   {
     id: 17,
@@ -412,9 +412,11 @@ const questionsData = [
   }
 ];
 
+
 /* =====================================================
    EXPLICAÇÕES DAS RESPOSTAS
 ===================================================== */
+
 
 const explanations = {
   1: "Serviços de streaming transmitem áudio e vídeo pela internet, permitindo acessar filmes, séries e músicas sob demanda.",
@@ -459,7 +461,6 @@ let userScore = 0;
 let bonusPointsEarned = 0;
 let userAnswers = [];
 let userData = { name: "", email: "", cpf: "", isGuest: false };
-
 let timerInterval = null;
 let secondsElapsed = 0;
 let questionSeconds = 20;
@@ -875,3 +876,32 @@ function restartQuiz() {
   timerInterval = null;
   showScreen("screen-menu");
 }
+
+
+
+/* Adicionando o Banco de Dados SQL */
+
+function finishQuiz() {
+  stopQuestionTimer();
+  clearInterval(timerInterval);
+  timerInterval = null;
+  showScreen("screen-feedback");
+
+  // Exibe o resultado na tela normalmente
+  document.getElementById("final-score").textContent = userScore;
+  
+  // Regra: Salvar no banco SOMENTE se NÃO for convidado
+  if (!userData.isGuest) {
+    salvarPartidaNoBanco({
+      id_jogador: userData.id,
+      pontuacao_total: userScore,
+      pontos_bonus: bonusPointsEarned,
+      tempo_segundos: secondsElapsed,
+      ajudas_usadas: (3 - helpCounts.skip) + (2 - helpCounts.remove) + (1 - helpCounts.reveal)
+    });
+  } else {
+    console.log("Modo Convidado: partida concluída sem envio ao banco de dados.");
+  }
+}
+
+
