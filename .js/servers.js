@@ -1,4 +1,3 @@
-
 // Colocando o Banco de dados PostgreSQL a funcionar com o pgAdmin 4,
 // este código cria um servidor Node.js usando Express para gerir autenticação de jogadores, 
 // consulta de perguntas e registo de resultados de partidas.
@@ -10,6 +9,9 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+// Serve os ficheiros estáticos (index.html, style.css, etc.) da raiz do projeto
+app.use(express.static(__dirname + '/..'));
 
 // Configuração de acesso ao PostgreSQL gerido via pgAdmin 4
 const pool = new Pool({
