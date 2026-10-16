@@ -1,58 +1,82 @@
-# Passos 5 e 6 — Modelo lógico, normalização e dicionário
-Marco M2. A entrega do passo 5 é o modelo lógico: o desenho em `entregas/03-logico.pdf` (ou `.png`) e este texto em `entregas/03-logico.md`.
+# Passos 5 e 6 — Modelo lógico, normalização e dicionário de dados
 
-O desenho parte do modelo conceitual e mostra tabelas, colunas, chave primária e chaves estrangeiras. Não é outro DER. Pode ser feito no brModelo (modelo lógico) ou no Visual Paradigm Online. Se a normalização achar violação, corrijam o desenho e o texto.
-O desenho parte do modelo conceitual e mostra tabelas, colunas, chave primária e chaves estrangeiras
+O modelo abaixo corresponde às tabelas consultadas e atualizadas por `servers.js`.
+
 ## 5. Modelo lógico
 
-Conforme definido no escopo do projeto, o banco de dados é responsável exclusivamente por gerenciar usuários, pontuações e rankings, ficando as perguntas e alternativas armazenadas no código da aplicação
+### Tabelas e relacionamentos
 
-| Relacionamento no DER | Cardinalidade | Vira | Onde fica a FK ou a tabela associativa | Requisito |
-| Jogador realiza Partida| Jogador (1,1) — Partida (0,N) | Chave Estrangeira (FK) | FK `id_jogador` na tabela `partida` | RD07, RD08, RD10 |
+- `jogadores` (**PK** `id_jogador`)
+- `perguntas` (**PK** `id_pergunta`)
+- `opcoes` (**PK** `id_opcao`, **FK** `id_pergunta` → `perguntas.id_pergunta`)
+- `partidas` (**PK** `id_partida`, **FK** `id_jogador` → `jogadores.id_jogador`)
 
----
+| Relacionamento | Cardinalidade | Implementação |
+|---|---|---|
+| Jogador realiza Partida | `jogadores` 1 : N `partidas` | FK `partidas.id_jogador`. |
+| Pergunta possui Opção | `perguntas` 1 : 4 `opcoes` | FK `opcoes.id_pergunta`; `UNIQUE(id_pergunta, ordem)` e ordem de 1 a 4. |
+
+Os nomes plurais foram mantidos porque são os nomes utilizados pela API atual (`jogadores`, `perguntas`, `opcoes`, `partidas`). Alterá-los exige atualizar também as consultas de `servers.js`.
 
 ### Normalização
 
-Dependências funcionais no formato `determinante → dependente`, com o requisito que sustenta.
+| ID | Dependência funcional | Requisito |
+|---|---|---|
+| DF1 | `id_jogador → nome_usuario, senha, data_cadastro` | Identificação e autenticação do jogador. |
+| DF2 | `id_pergunta → topico, enunciado, pontos, is_bonus, explicacao` | Dados próprios de cada pergunta. |
+| DF3 | `id_opcao → id_pergunta, texto_opcao, is_correta, ordem` | Cada opção pertence a uma pergunta e possui sua própria ordem. |
+| DF4 | `id_partida → id_jogador, pontuacao_total, pontos_bonus, tempo_segundos, ajudas_usadas, data_partida` | Histórico de resultados. |
 
-| ID | Dependência Funcional | Requisito |
-| --- | --- | --- |
-| DF1 | `id_jogador → nome, email, cpf, data_cadastro` | RD07 |
-| DF2 | `id_partida → id_jogador, pontuacao_total, pontos_bonus, tempo_segundos, ajudas_usadas, data_partida` | RD07, RD08, RD10 |
-
----
-
-| Forma | Por que o esquema atende | Tabela em que isso aparece |
-| --- | --- | --- |
-| **1FN** | Todos os atributos possuem valores atômicos e indivisíveis. Não existem grupos repetidores nem colunas multivaloradas. | `jogador`, `partida` |
-| **2FN** | Não existem dependências parciais de chave composta. Como as tabelas possuem apenas chaves primárias simples (`id_jogador` e `id_partida`), a 2FN é atendida por definição. | `jogador`, `partida` |
-| **3FN** | Não existem dependências transitivas entre atributos não-chave. Todos os atributos dependem exclusivamente e diretamente de suas respectivas chaves primárias. | `jogador`, `partida` |
-
----
+| Forma normal | Justificativa | Tabelas |
+|---|---|---|
+| **1FN** | Os atributos guardam valores atômicos; as opções foram separadas da pergunta em linhas próprias. | Todas. |
+| **2FN** | As tabelas usam chaves primárias simples, sem dependência parcial de chave composta. | Todas. |
+| **3FN** | Os atributos não-chave dependem diretamente da chave primária da própria tabela. Não há dados de jogador repetidos em `partidas` além da FK necessária. | Todas. |
 
 ## 6. Dicionário de dados
 
-### Tabela: `jogador`
+### Tabela `jogadores`
 
-| Coluna | Tipo e tamanho | Nulo | Restrição | Descrição |
-| --- | --- | --- | --- | --- |
-| `id_jogador` | INT / SERIAL | NOT NULL | PK | Identificador único do jogador cadastrado. |
-| `nome` | VARCHAR(100) | NOT NULL | | Nome completo do jogador. |
-| `email` | VARCHAR(150) | NOT NULL | UNIQUE | Endereço de e-mail único do jogador. |
-| `cpf` | VARCHAR(14) | NOT NULL | UNIQUE | CPF único do jogador. |
-| `data_cadastro` | TIMESTAMP | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Data e hora em que o cadastro do jogador foi efetuado. |
+| Coluna | Tipo | Nulo | Restrição | Descrição |
+|---|---|---|---|---|
+| `id_jogador` | `SERIAL` | Não | PK | Identificador do jogador. |
+| `nome_usuario` | `VARCHAR(50)` | Não | UNIQUE | Nome usado para entrar no quiz. |
+| `senha` | `VARCHAR(255)` | Não | — | Senha recebida pela rota de login. A versão atual não aplica hash; isso deve ser corrigido antes da publicação. |
+| `data_cadastro` | `TIMESTAMP` | Sim | DEFAULT `CURRENT_TIMESTAMP` | Data e hora de criação da conta. |
 
----
+### Tabela `perguntas`
 
-### Tabela: `partida`
+| Coluna | Tipo | Nulo | Restrição | Descrição |
+|---|---|---|---|---|
+| `id_pergunta` | `INT` | Não | PK | Identificador da pergunta, atribuído na carga. |
+| `topico` | `VARCHAR(150)` | Não | — | Tema apresentado na tela do quiz. |
+| `enunciado` | `TEXT` | Não | — | Texto da pergunta. |
+| `pontos` | `INT` | Não | DEFAULT 3; CHECK `pontos > 0` | Pontuação-base cadastrada. O frontend atual calcula 3 ou 5 pontos a partir de `is_bonus`. |
+| `is_bonus` | `BOOLEAN` | Não | DEFAULT `FALSE` | Indica se a pergunta é bônus. |
+| `explicacao` | `TEXT` | Não | — | Explicação mostrada após a resposta. |
 
-| Coluna | Tipo e tamanho | Nulo | Restrição | Descrição |
-| --- | --- | --- | --- | --- |
-| `id_partida` | INT / SERIAL | NOT NULL | PK | Identificador único do registro da partida. |
-| `id_jogador` | INT | NOT NULL | FK → jogador.id_jogador | Chave estrangeira que vincula a partida ao jogador. |
-| `pontuacao_total` | INT | NOT NULL | CHECK (pontuacao_total >= 0) | Pontuação total obtida pelo jogador na partida. |
-| `pontos_bonus` | INT | NOT NULL | DEFAULT 0 / CHECK (pontos_bonus >= 0) | Pontos acumulados nas perguntas bônus. |
-| `tempo_segundos` | INT | NOT NULL | CHECK (tempo_segundos >= 0) | Duração total da partida em segundos. |
-| `ajudas_usadas` | INT | NOT NULL | DEFAULT 0 / CHECK (ajudas_usadas >= 0) | Quantidade de recursos de ajuda utilizados na rodada. |
-| `data_partida` | TIMESTAMP | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Data e hora em que a partida foi concluída. |
+### Tabela `opcoes`
+
+| Coluna | Tipo | Nulo | Restrição | Descrição |
+|---|---|---|---|---|
+| `id_opcao` | `SERIAL` | Não | PK | Identificador da opção. |
+| `id_pergunta` | `INT` | Não | FK → `perguntas.id_pergunta`; ON DELETE CASCADE | Pergunta à qual a opção pertence. |
+| `texto_opcao` | `TEXT` | Não | — | Texto da alternativa. |
+| `is_correta` | `BOOLEAN` | Não | DEFAULT `FALSE` | Indica a alternativa correta. |
+| `ordem` | `INT` | Não | CHECK de 1 a 4; UNIQUE com `id_pergunta` | Ordem de leitura das alternativas antes do embaralhamento. |
+
+### Tabela `partidas`
+
+| Coluna | Tipo | Nulo | Restrição | Descrição |
+|---|---|---|---|---|
+| `id_partida` | `SERIAL` | Não | PK | Identificador do resultado. |
+| `id_jogador` | `INT` | Não | FK → `jogadores.id_jogador`; ON DELETE CASCADE | Jogador que concluiu a partida. |
+| `pontuacao_total` | `INT` | Não | CHECK `>= 0` | Pontuação total. |
+| `pontos_bonus` | `INT` | Não | DEFAULT 0; CHECK `>= 0` | Pontos obtidos em perguntas bônus. |
+| `tempo_segundos` | `INT` | Não | CHECK `>= 0` | Duração total da partida em segundos. |
+| `ajudas_usadas` | `INT` | Não | DEFAULT 0; CHECK `>= 0` | Quantidade de ajudas usadas. |
+| `data_partida` | `TIMESTAMP` | Sim | DEFAULT `CURRENT_TIMESTAMP` | Data e hora do registro da partida. |
+
+### Observação sobre fontes
+
+O modelo antigo previa referências, editoras e idiomas, mas esses campos não existem no banco nem na API atuais. A consulta de explicação foi, portanto, alinhada ao que o código realmente fornece. Para guardar fontes bibliográficas, será necessário criar as tabelas e atualizar o backend.

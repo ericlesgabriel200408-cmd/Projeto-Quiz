@@ -1,21 +1,31 @@
-| Entidade                 | Atributos                             | Identificador   |
-| ------------------------ | ------------------------------------- | --------------- |
-| **Questão**              | código, título, enunciado, explicação | código          |
-| **Assunto**              | nome                                  | nome            |
-| **Nível de dificuldade** | código, descrição                     | código          |
-| **Alternativa**          | letra, texto, correta                 | letra + questão |
-| **Referência**           | título, URL, idioma                   | URL             |
-| **Editora**              | nome                                  | nome            |
-| **Idioma**               | código, descrição                     | código          |
-| **Palavra-chave**        | termo                                 | termo           |
+# Passo 4 — Modelo conceitual do Tech Trivia
 
+## Entidades e atributos
 
-| Relacionamento                          | Cardinalidade                       | Justificativa                                                                                                       | Requisito |
-| --------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------- |
-| **Questão pertence a Assunto**          | Questão (1,1) — Assunto (1,N)       | Toda questão pertence a exatamente um assunto. Não existem dois assuntos com o mesmo nome.                          | **RD02**  |
-| **Questão possui Nível de dificuldade** | Questão (1,1) — Nível (1,N)         | Toda questão possui exatamente um nível de dificuldade, pertencente a um conjunto controlado.                       | **RD03**  |
-| **Questão possui Alternativa**          | Questão (4,4) — Alternativa (1,1)   | Cada questão possui quatro alternativas, identificadas pelas letras A a D.                                          | **RD04**  |
-| **Questão é apoiada por Referência**    | Questão (1,1) — Referência (1,N)    | Cada questão cita uma única referência, e uma mesma referência pode amparar várias questões.                        | **RD06**  |
-| **Referência é publicada por Editora**  | Referência (1,1) — Editora (1,N)    | Cada referência é publicada por uma editora, e o nome da editora é gravado uma única vez.                           | **RD07**  |
-| **Referência possui Idioma**            | Referência (1,1) — Idioma (1,N)     | O idioma da referência pertence a um conjunto controlado.                                                           | **RD08**  |
-| **Questão possui Palavra-chave**        | Questão (0,N) — Palavra-chave (0,N) | Cada questão pode receber zero ou mais palavras-chave, e uma mesma palavra-chave pode ser usada em várias questões. | **RD09**  |
+| Entidade | Atributos | Identificador |
+|---|---|---|
+| **Jogador** | nome de usuário, senha, data de cadastro | id do jogador |
+| **Pergunta** | tema, enunciado, pontuação-base, indicador de bônus, explicação | id da pergunta |
+| **Opção** | texto da opção, indicação de correta, ordem de exibição | id da opção |
+| **Partida** | pontuação total, pontos bônus, tempo em segundos, ajudas usadas, data da partida | id da partida |
+
+## Relacionamentos e cardinalidades
+
+| Relacionamento | Cardinalidade | Justificativa |
+|---|---|---|
+| **Jogador realiza Partida** | Jogador (0,N) — Partida (1,1) | Um jogador pode não ter partidas ou pode registrar várias; cada partida registrada pertence a um jogador. |
+| **Pergunta possui Opção** | Pergunta (1,4) — Opção (1,1) | Cada pergunta deve possuir quatro opções; cada opção pertence a uma única pergunta. |
+
+## Regras do modelo conceitual
+
+1. `Jogador` é identificado por `id_jogador`; o nome de usuário não pode se repetir.
+2. `Pergunta` é identificada por `id_pergunta` e contém os dados que a API entrega ao frontend.
+3. `Opção` tem uma ordem de 1 a 4 por pergunta. Exatamente uma das quatro opções deve ser correta.
+4. `Partida` registra somente resultados de jogadores cadastrados; o modo Convidado não envia resultados ao banco.
+5. Pontuação, bônus, tempo e quantidade de ajudas não podem ser negativos.
+
+## Fora do modelo atual
+
+A versão atual não possui entidades separadas para categoria/assunto, dificuldade, referência, editora, idioma ou palavra-chave. O tema é armazenado diretamente em `perguntas.topico`, e o banco não guarda URL de fonte bibliográfica. Essas entidades não devem aparecer no DER como tabelas implementadas, a menos que a equipe decida ampliar também o código e a API.
+
+**Nota para o desenho:** em Chen, desenhem entidades como retângulos, atributos como elipses e relacionamentos como losangos. Identifiquem as chaves primárias e anotem as cardinalidades indicadas acima.

@@ -4,14 +4,12 @@ A equipe constrói o banco só de cima para baixo: texto e requisitos, DER, tabe
 
 Identifiquem uma vez, neste arquivo copiado para o repositório:
 
-
 | Campo       | Preenchimento |
 | ----------- | ------------- |
-| Equipe      |   13          |
-| Integrantes |Vinicius Ian Alves de Morais, Samuel Silva de Oliveira, Ericles Gabriel Clemente Queiroz, Samuel Vitor Alves de Carvalho,Johann de Carvalho dos Santos      |
-| Repositório | https://github.com/ericlesgabriel200408-cmd/Projeto-Quiz.git              |
-| Data        | 04/10/2026              |
-
+| Equipe      | 13 |
+| Integrantes | Ericles Gabriel Clemente Queiroz, Samuel O., Samuel C., Vinicius M., Johhann S. |
+| Repositório | https://github.com/ericles/quiz-tech |
+| Data        | 04/10/2026 |
 
 ## Regras
 
@@ -21,12 +19,9 @@ Identifiquem uma vez, neste arquivo copiado para o repositório:
 - Modelo conceitual: DER na notação de Chen, em PDF ou imagem, no brModelo ou no Visual Paradigm Online.
 - Modelo lógico: outro desenho, com tabelas, colunas, PK e FK, no brModelo (modelo lógico) ou no Visual Paradigm Online.
 - Scripts: rodam em sequência, do zero, num banco vazio, sem erro.
-- A partir do modelo físico, nomes de tabelas e colunas são contrato com a disciplina de Web. Mudança posterior entra no repositório e é comunicada.
-
-
+- A partir do modelo físico, nomes de tabelas e colunas são contrato com a disciplina de Web. Mudança posterior entra no repositório e é communicated.
 
 ## O que entregar
-
 
 | Marco | Semana | Passos | Arquivo                                  |
 | ----- | ------ | ------ | ---------------------------------------- |
@@ -34,7 +29,6 @@ Identifiquem uma vez, neste arquivo copiado para o repositório:
 | M2    | 4      | 5 e 6  | `03-logico.pdf` e `03-logico.md`         |
 | M3    | 6      | 7      | `04-ddl.sql`                             |
 | M4    | 8      | 8 e 9  | `05-dml-consultas.sql` e `06-testes.sql` |
-
 
 ```text
 entregas/
@@ -46,8 +40,3 @@ entregas/
   04-ddl.sql
   05-dml-consultas.sql
   06-testes.sql
-```
-
-Ordem de execução: `04-ddl.sql`, depois `05-dml-consultas.sql`, depois `06-testes.sql`.
-
-A extensão do enunciado continua opcional, valendo até 1 ponto. Se fizerem, acrescentem o DER, o DDL e uma consulta numa pasta `08-extensao/`.

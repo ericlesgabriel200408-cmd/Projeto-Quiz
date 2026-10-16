@@ -1,50 +1,49 @@
--- Passo 7 — Modelo físico
--- Equipe:
--- PostgreSQL. Por que este SGBD:
--- Contrato com Aplicativos para Web: os nomes abaixo são os acordados.
--- Banco vazio:
---   createdb tech_trivia
---   psql -d tech_trivia -v ON_ERROR_STOP=1 -f 04-ddl.sql
--- Só esquema e domínio fixo (idiomas, alternativas).
--- Categorias, publicadores, fontes e perguntas ficam no passo 8.
+-- Passo 7 — Modelo físico (PostgreSQL)
+-- Equipe: 13
+-- PostgreSQL. Por que este SGBD: Compatível com as tabelas e consultas de servers.js.
+-- Criar um banco vazio e executar este arquivo antes de 05-dml-consultas.sql.
+-- Justificativa do PostgreSQL: oferece integridade referencial, restrições declarativas e consultas relacionais para os dados do quiz.
 
 BEGIN;
 
--- TODO: CREATE TABLE, na ordem em que as FK permitem.
--- PK id_<tabela>. Nomes em português, minúsculos, sem acento, singular.
--- PK, FK, NOT NULL, UNIQUE e CHECK declarados aqui, como no dicionário.
-
--- TODO: INSERT do domínio fixo.
--- Passo 7 — Modelo físico
--- Equipe:
--- PostgreSQL. Por que este SGBD: SGBD relacional de alto desempenho, robusto e eficiente para garantir integridade referencial, unicidade nos cadastros de jogadores e cálculo rápido de estatísticas de ranking.
--- Contrato com Aplicativos para Web: os nomes abaixo são os acordados.
--- Banco vazio:
---   createdb tech_trivia
---   psql -d tech_trivia -v ON_ERROR_STOP=1 -f 04-ddl.sql
--- Nota: Perguntas, opções, explicações e áreas temáticas são mantidas diretamente no código da aplicação (questions.js).
-
-BEGIN;
-
--- 1. Tabela Jogador
-CREATE TABLE jogador (
+CREATE TABLE jogadores (
     id_jogador SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    cpf VARCHAR(14) NOT NULL UNIQUE,
+    nome_usuario VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
     data_cadastro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Tabela Partida
-CREATE TABLE partida (
+CREATE TABLE perguntas (
+    id_pergunta INT PRIMARY KEY,
+    topico VARCHAR(150) NOT NULL,
+    enunciado TEXT NOT NULL,
+    pontos INT NOT NULL DEFAULT 3 CHECK (pontos > 0),
+    is_bonus BOOLEAN NOT NULL DEFAULT FALSE,
+    explicacao TEXT NOT NULL
+);
+
+CREATE TABLE opcoes (
+    id_opcao SERIAL PRIMARY KEY,
+    id_pergunta INT NOT NULL REFERENCES perguntas(id_pergunta) ON DELETE CASCADE ON UPDATE CASCADE,
+    texto_opcao TEXT NOT NULL,
+    is_correta BOOLEAN NOT NULL DEFAULT FALSE,
+    ordem INT NOT NULL CHECK (ordem BETWEEN 1 AND 4),
+    CONSTRAINT uq_opcoes_ordem UNIQUE (id_pergunta, ordem)
+);
+
+-- Impede que uma pergunta tenha mais de uma opção marcada como correta.
+CREATE UNIQUE INDEX uq_opcoes_uma_correta
+    ON opcoes (id_pergunta)
+    WHERE is_correta = TRUE;
+
+CREATE TABLE partidas (
     id_partida SERIAL PRIMARY KEY,
-    id_jogador INT NOT NULL REFERENCES jogador(id_jogador) ON DELETE CASCADE ON UPDATE CASCADE,
-    pontuacao_total INT NOT NULL CONSTRAINT chk_partida_pontuacao CHECK (pontuacao_total >= 0),
-    pontos_bonus INT NOT NULL DEFAULT 0 CONSTRAINT chk_partida_bonus CHECK (pontos_bonus >= 0),
-    tempo_segundos INT NOT NULL CONSTRAINT chk_partida_tempo CHECK (tempo_segundos >= 0),
-    ajudas_usadas INT NOT NULL DEFAULT 0 CONSTRAINT chk_partida_ajudas CHECK (ajudas_usadas >= 0),
+    id_jogador INT NOT NULL REFERENCES jogadores(id_jogador) ON DELETE CASCADE ON UPDATE CASCADE,
+    pontuacao_total INT NOT NULL CHECK (pontuacao_total >= 0),
+    pontos_bonus INT NOT NULL DEFAULT 0 CHECK (pontos_bonus >= 0),
+    tempo_segundos INT NOT NULL CHECK (tempo_segundos >= 0),
+    ajudas_usadas INT NOT NULL DEFAULT 0 CHECK (ajudas_usadas >= 0),
     data_partida TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMIT;
 COMMIT;
