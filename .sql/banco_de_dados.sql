@@ -1,6 +1,4 @@
--- Apenas Colocando para ter noção de como está criado o banco de dados
-
-
+-- Coloquei a base do banco aqui, mas apenas para noção, não é para ser executado. --
 
 -- 1. Tabela de Jogadores (Nome e Senha)
 CREATE TABLE jogadores (
@@ -39,16 +37,3 @@ CREATE TABLE partidas (
     ajudas_usadas INT DEFAULT 0,
     data_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Testanto para verificar as tabelas --
-select * from jogadores;
-select * from perguntas;
-select * from opcoes;
-select * from partidas;
-
-
--- Testando --
-select * from opcoes;
-select * from jogadores;
-
-
-
