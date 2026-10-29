@@ -37,4 +37,3 @@ INSERT INTO partidas (id_jogador, pontuacao_total, pontos_bonus, tempo_segundos,
 VALUES (-999, 0, 0, 10, 0);
 
 -- Observação: o esquema impede zero ou mais de uma alternativa correta por meio do índice apenas no limite "mais de uma".
--- A exigência de exatamente quatro opções e pelo menos uma correta também deve ser validada na carga/edição dos dados.
