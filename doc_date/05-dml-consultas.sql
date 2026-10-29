@@ -1,10 +1,9 @@
 -- Passo 8 — Carga inicial e consultas (PostgreSQL)
--- Respostas corretas copiadas da planilha CSV enviada.
--- A planilha não identifica questões bônus; por isso is_bonus fica FALSE para todas até confirmação da equipe.
+-- A planilha não identifica questões bônus, por isso is_bonus fica FALSE para todas até confirmação da equipe.
 
 
 BEGIN;
-
+-- Inserindo os values das perguntas --
 INSERT INTO perguntas (id_pergunta, topico, enunciado, pontos, is_bonus, explicacao) VALUES
     (1, 'Streaming, jogos online e gamification', 'Que tipo de serviço plataformas como Netflix, Disney+ e Spotify oferecem?', 3, FALSE, 'Netflix, Disney+ e Spotify distribuem conteúdo pela internet para reprodução sob demanda.'),
     (2, 'Streaming, jogos online e gamification', 'O que é indispensável para conseguir jogar um jogo online multiplayer?', 3, FALSE, 'O multiplayer online depende da comunicação entre o dispositivo do jogador e os servidores ou demais participantes pela rede.'),
@@ -39,7 +38,7 @@ INSERT INTO perguntas (id_pergunta, topico, enunciado, pontos, is_bonus, explica
     (31, 'Smartphones, dispositivos mobile e baterias', 'Como o nível de brilho da tela impacta a bateria do celular?', 3, FALSE, 'A tela é um dos componentes que pode consumir bastante energia; maior brilho geralmente aumenta esse consumo.'),
     (32, 'Smartphones, dispositivos mobile e baterias', 'Como as atualizações do sistema operacional podem beneficiar a bateria do aparelho?', 3, FALSE, 'Atualizações podem corrigir falhas e melhorar a eficiência, embora o efeito dependa do aparelho e da versão.');
 
--- Cada pergunta recebe quatro opções; a alternativa correta é marcada em is_correta.
+-- Cada pergunta recebe quatro opções, a alternativa correta é marcada em is_correta.
 INSERT INTO opcoes (id_pergunta, texto_opcao, is_correta, ordem) VALUES
     (1, 'Serviços de armazenamento local de arquivos', FALSE, 1),
     (1, 'Serviços exclusivos de edição de documentos', FALSE, 2),
