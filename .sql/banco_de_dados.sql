@@ -5,8 +5,10 @@ CREATE TABLE jogadores (
     id_jogador SERIAL PRIMARY KEY,
     nome_usuario VARCHAR(50) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL, -- Recomendado salvar a senha criptografada (hash)
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	avatar VARCHAR(100) DEFAULT 'avatar_default_1.png'
 );
+
 
 -- 2. Tabela de Perguntas
 CREATE TABLE perguntas (

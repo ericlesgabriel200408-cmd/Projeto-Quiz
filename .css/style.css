@@ -1,17 +1,42 @@
-/*  Pra facilitar a leitura e caso troque algo no codigo, foi deixado o que cada um é no inical de cada bloco de código,
-para facilitar a leitura e caso troque algo no codigo, foi deixado o que cada um é no inical de cada bloco de código. */
+:root {
+  /* PALETA DE CORES DO JOGO CYBER ARENA:
+     Centraliza todas as cores do sistema para facilitar trocas futuras. */
+  --bg-topo: #1D1142;            /* Roxo escuro profundo do topo da tela */
+  --bg-base: #0D1024;            /* Azul-marinho quase preto da base da tela */
+  --bg-cartao: #1A1636;          /* Fundo dos cartões centrais e modais */
+  --bg-bloco: #241F47;           /* Fundo de caixas internas, inputs e barra lateral */
+  --borda-sutil: #39326B;        /* Borda padrão dos cartões e campos */
+  --texto-claro: #FFFFFF;        /* Branco puro para títulos e textos principais */
+  --texto-suave: #B4B0D0;        /* Lilás acinzentado para subtítulos e descrições */
+  --btn-amarelo: #FFD43B;        /* Amarelo dourado do botão principal "Iniciar Quiz" */
+  --btn-amarelo-hover: #F5C318;  /* Amarelo mais intenso ao passar o mouse */
+  --btn-rosa: #EC4899;           /* Rosa/Magenta vibrante do botão "Ranking" */
+  --btn-rosa-hover: #DB2777;     /* Rosa mais escuro ao passar o mouse */
+  --btn-violeta: #8B5CF6;        /* Violeta elétrico para botões secundários (Regras) */
+  --btn-azul: #3B82F6;           /* Azul brilhante para botões secundários (Créditos) */
+  --btn-perfil-bg: #262147;      /* Fundo escuro elegante do botão "Perfil" */
+  --cor-acerto: #22C55E;         /* Verde esmeralda para alternativa correta */
+  --cor-acerto-bg: #0B3323;      /* Fundo escuro esverdeado para feedback de acerto */
+  --cor-erro: #EF4444;           /* Vermelho coral para alternativa errada e sair */
+  --cor-erro-bg: #3F121D;        /* Fundo escuro avermelhado para feedback de erro */
+}
 
-/* RESET E CONFIGURAÇÕES GERAIS */
 * {
+  /* RESET GLOBAL DO APLICATIVO:
+     Remove margens/espaçamentos padrão do navegador em todos os elementos
+     e define a fonte padrão da interface. */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 
 body {
-  background-color: #eef2f5;
-  color: #1e293b;
+  /* CORPO PRINCIPAL DA PÁGINA (Tela inteira do Quiz Tech):
+     Aplica o degradê escuro roxo/azul da paleta, define o texto branco
+     e organiza cabeçalho, área central e rodapé em coluna. */
+  background: radial-gradient(circle at top left, var(--bg-topo) 0%, var(--bg-base) 70%);
+  color: var(--texto-claro);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,22 +45,27 @@ body {
   padding: 20px;
 }
 
-/* CABEÇALHO */
 .main-header {
+  /* CABEÇALHO SUPERIOR DO APLICATIVO:
+     Centraliza a área do logotipo/título "PROJETO CYBER ARENA" no topo. */
   margin-top: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
 .main-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #0f172a;
-  letter-spacing: 1px;
+  /* TÍTULO PRINCIPAL DO CABEÇALHO:
+     Estiliza o nome "PROJETO CYBER ARENA" com destaque branco e brilho suave. */
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: var(--texto-claro);
+  letter-spacing: 1.5px;
+  text-shadow: 0 4px 18px rgba(255, 212, 59, 0.25);
 }
 
-/* CONTAINER PRINCIPAL */
 .app-container {
+  /* CONTAINER CENTRAL DAS TELAS:
+     Limita a largura máxima da área útil a 960px e centraliza a tela ativa. */
   width: 100%;
   max-width: 960px;
   flex: 1;
@@ -44,408 +74,1027 @@ body {
   align-items: center;
 }
 
-/* TELAS */
 .card-screen {
+  /* CARTÃO BASE DE TODAS AS TELAS (Login, Menu, Perfil, Ranking, Regras, Quiz, Resultado):
+     Mantém todas as telas escondidas até receberem a classe .active via JavaScript. */
   display: none;
-  background: #fff;
-  border-radius: 16px;
+  background-color: var(--bg-cartao);
+  border: 1px solid var(--borda-sutil);
+  border-radius: 18px;
   padding: 30px;
   width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card-screen.active {
+  /* ESTADO ATIVO DA TELA:
+     Exibe na tela apenas a seção selecionada no momento. */
   display: block !important;
 }
 
-.hidden {
-  display: none !important;
-}
-
-/* CADASTRO */
 #screen-register {
-  max-width: 440px;
-  border: 1px solid #e2e8f0;
+  /* TELA 1 - CADASTRO E LOGIN:
+     Limita a largura do cartão de login a 450px para manter o formulário compacto. */
+  max-width: 450px;
 }
 
 .card-header h2 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #0f172a;
+  /* TÍTULO DO CARTÃO DE LOGIN:
+     Estiliza o cabeçalho "ENTRAR NO QUIZ TECH". */
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin-bottom: 6px;
 }
 
 .card-header .subtitle {
+  /* SUBTÍTULO DO CARTÃO DE LOGIN:
+     Texto explicativo logo abaixo do título na tela inicial. */
   font-size: 0.9rem;
-  font-weight: 500;
-  color: #64748b;
+  color: var(--texto-suave);
   margin-bottom: 20px;
 }
 
 .form-group {
+  /* GRUPO DE CAMPO DO FORMULÁRIO (Tela de Login):
+     Organiza cada rótulo e caixa de texto com espaçamento inferior. */
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
 }
 
 .form-group input[type="text"],
-.form-group input[type="email"] {
+.form-group input[type="password"] {
+  /* CAMPOS DE TEXTO E SENHA (Tela de Login):
+     Estiliza os inputs de nome de usuário e senha no tema escuro. */
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: 13px 16px;
+  border: 1px solid var(--borda-sutil);
+  border-radius: 10px;
   font-size: 0.95rem;
-  background-color: #f8fafc;
+  background-color: var(--bg-bloco);
+  color: var(--texto-claro);
   outline: none;
+  transition: border-color 0.2s;
 }
 
 .form-group input:focus {
-  border-color: #ff6b35;
-  background-color: #fff;
+  /* EFEITO DE FOCO NOS INPUTS (Tela de Login):
+     Destaca a borda em amarelo dourado quando o usuário clica para digitar. */
+  border-color: var(--btn-amarelo);
 }
 
 .checkbox-group {
+  /* LINHA DO CHECKBOX DE TERMOS (Tela de Login):
+     Alinha a caixinha de seleção ao lado do texto de aceite. */
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
 }
 
 .checkbox-group label {
-  font-size: 0.8rem;
-  color: #64748b;
-  line-height: 1.3;
+  /* TEXTO DO CHECKBOX DE TERMOS (Tela de Login):
+     Define cor suave e cursor clicável para o texto de confirmação. */
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  cursor: pointer;
 }
 
-/* BOTÕES PRINCIPAIS */
-.btn-primary {
-  width: 100%;
-  background-color: #ff6b35;
-  color: #fff;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
+.avatar-label {
+  /* RÓTULO DO SELETOR DE AVATAR (Telas de Login e Perfil):
+     Texto "Selecione sua imagem de perfil" acima das opções de fotos. */
+  font-size: 0.85rem;
   font-weight: 700;
-  font-size: 1rem;
+  color: var(--texto-suave);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.avatar-grid {
+  /* GRADE DE IMAGENS PRÉ-DEFINIDAS DE PERFIL (Telas de Login e Perfil):
+     Organiza as 6 opções de avatares em uma grade de 6 colunas. */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  background-color: var(--bg-bloco);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--borda-sutil);
+}
+
+.avatar-option {
+  /* ITEM CLICÁVEL DE CADA AVATAR (Telas de Login e Perfil):
+     Centraliza o emblema visual dentro de cada célula da grade. */
   cursor: pointer;
-  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-option input[type="radio"] {
+  /* INPUT RADIO OCULTO DO AVATAR (Telas de Login e Perfil):
+     Esconde a bolinha padrão do navegador para deixar apenas o círculo visual. */
+  display: none;
+}
+
+.avatar-badge {
+  /* CÍRCULO VISUAL DO AVATAR PRÉ-DEFINIDO (Login, Menu, Perfil e Ranking):
+     Desenha o avatar redondo com iniciais/ícone estilizado em HTML/CSS puro. */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+
+.avatar-option input[type="radio"]:checked + .avatar-badge {
+  /* ESTADO SELECIONADO DO AVATAR (Telas de Login e Perfil):
+     Destaca o avatar escolhido com borda amarela dourada e brilho. */
+  border-color: var(--btn-amarelo);
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(255, 212, 59, 0.55);
+}
+
+.av-1 {
+  /* COR DO AVATAR 1 (Degradê Azul/Ciano):
+     Estilo visual da primeira opção de foto de perfil. */
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
+}
+
+.av-2 {
+  /* COR DO AVATAR 2 (Degradê Rosa/Magenta):
+     Estilo visual da segunda opção de foto de perfil. */
+  background: linear-gradient(135deg, #EC4899, #F43F5E);
+}
+
+.av-3 {
+  /* COR DO AVATAR 3 (Degradê Verde Esmeralda):
+     Estilo visual da terceira opção de foto de perfil. */
+  background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.av-4 {
+  /* COR DO AVATAR 4 (Degradê Violeta/Roxo):
+     Estilo visual da quarta opção de foto de perfil. */
+  background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+}
+
+.av-5 {
+  /* COR DO AVATAR 5 (Degradê Laranja/Dourado):
+     Estilo visual da quinta opção de foto de perfil. */
+  background: linear-gradient(135deg, #F59E0B, #EA580C);
+}
+
+.av-6 {
+  /* COR DO AVATAR 6 (Degradê Índigo/Celeste):
+     Estilo visual da sexta opção de foto de perfil. */
+  background: linear-gradient(135deg, #4F46E5, #38BDF8);
+}
+
+.av-guest {
+  /* COR DO AVATAR DE CONVIDADO (Cinza Ardósia):
+     Estilo visual exibido quando o usuário entra sem criar conta. */
+  background: linear-gradient(135deg, #475569, #334155);
+}
+
+.btn-primary {
+  /* BOTÃO PRINCIPAL AMARELO DOURADO (Iniciar Quiz / Entrar / Voltar): */
+  width: 100%;
+  background-color: var(--btn-amarelo);
+  color: #16112E;
+  border: 2px solid #FDE047;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 212, 59, 0.28);
+  transition: background-color 0.2s, transform 0.1s;
   margin-top: 10px;
 }
 
 .btn-primary:hover {
-  background-color: #e85a26;
+  /* HOVER DO BOTÃO PRINCIPAL AMARELO:
+     Escurece levemente o amarelo e eleva o botão ao passar o mouse. */
+  background-color: var(--btn-amarelo-hover);
+  transform: translateY(-1px);
 }
 
-/* MODO CONVIDADO */
+.menu-action-grid {
+  /* GRADE DE BOTÕES DO MENU PRINCIPAL (Ranking, Perfil, Regras, Créditos):
+     Organiza os botões coloridos em 2 colunas lado a lado */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.btn-ranking {
+  /* BOTÃO ROSA/MAGENTA DE RANKING (Menu Principal):*/
+  width: 100%;
+  background-color: var(--btn-rosa);
+  color: #FFFFFF;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-ranking:hover {
+  /* HOVER DO BOTÃO ROSA DE RANKING:
+     Intensifica o tom magenta ao passar o mouse. */
+  background-color: var(--btn-rosa-hover);
+  transform: translateY(-1px);
+}
+
+.btn-profile {
+  /* BOTÃO ESCURO DE PERFIL (Menu Principal):*/
+  width: 100%;
+  background-color: var(--btn-perfil-bg);
+  color: #FFFFFF;
+  border: 1px solid #4C4485;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.btn-profile:hover:not(:disabled) {
+  /* HOVER DO BOTÃO DE PERFIL (Quando habilitado para conta salva):
+     Ilumina a borda em amarelo dourado ao passar o mouse. */
+  border-color: var(--btn-amarelo);
+  background-color: #302959;
+}
+
+.btn-profile:disabled {
+  /* ESTADO BLOQUEADO DO BOTÃO DE PERFIL (Modo Convidado):
+     Indica visualmente que o Perfil exige uma conta salva. */
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-violet {
+  /* BOTÃO VIOLETA (Regras do Quiz no Menu Principal):
+     Usa o tom violeta da paleta da imagem para acesso às regras. */
+  width: 100%;
+  background-color: var(--btn-violeta);
+  color: #FFFFFF;
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-violet:hover {
+  /* HOVER DO BOTÃO VIOLETA:
+     Suaviza a opacidade ao passar o mouse. */
+  opacity: 0.9;
+}
+
+.btn-blue {
+  /* BOTÃO AZUL BRILHANTE (Créditos no Menu Principal):
+     Usa o tom azul da paleta da imagem para acesso aos créditos. */
+  width: 100%;
+  background-color: var(--btn-azul);
+  color: #FFFFFF;
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-blue:hover {
+  /* HOVER DO BOTÃO AZUL:
+     Suaviza a opacidade ao passar o mouse. */
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  /* BOTÃO SECUNDÁRIO PADRÃO (Salvar Avatar na tela de Perfil):
+     Botão discreto para ações internas dentro das telas secundárias. */
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--borda-sutil);
+  background-color: var(--bg-bloco);
+  color: var(--texto-claro);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  /* HOVER DO BOTÃO SECUNDÁRIO:
+     Destaca a borda em amarelo dourado. */
+  border-color: var(--btn-amarelo);
+}
+
 .guest-option {
+  /* ÁREA INFERIOR DA TELA DE LOGIN (Modo Convidado):
+     Separa o botão de convidado do formulário de cadastro. */
   margin-top: 20px;
   text-align: center;
 }
 
 .divider-text {
+  /* TEXTO DIVISOR "ou" (Tela de Login):
+     Exibe a palavra "ou" entre o botão cadastrar e entrar como convidado. */
   display: block;
   font-size: 0.8rem;
-  color: #94a3b8;
-  margin-bottom: 12px;
+  color: var(--texto-suave);
+  margin-bottom: 10px;
 }
 
 .btn-guest {
+  /* BOTÃO CONTORNADO (Entrar como Convidado / Sair da Conta):
+     Botão transparente com borda tracejada para ações de saída ou convidado. */
   background: transparent;
-  border: 1px dashed #cbd5e1;
-  color: #475569;
+  border: 1px dashed var(--borda-sutil);
+  color: var(--texto-suave);
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 11px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
+  margin-top: 14px;
   transition: all 0.2s ease;
 }
 
 .btn-guest:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
-  background-color: #fff7f5;
+  /* HOVER DO BOTÃO CONVIDADO / SAIR:
+     Destaca borda e texto em amarelo dourado. */
+  border-color: var(--btn-amarelo);
+  color: var(--btn-amarelo);
 }
 
-/* LAYOUT DO QUIZ */
-.quiz-layout {
+.menu-card {
+  /* CONTEÚDO CENTRAL DO MENU PRINCIPAL (#screen-menu):
+     Limita a largura do menu a 520px e centraliza os elementos. */
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.menu-card h2,
+#screen-rules h2,
+#screen-credits h2,
+#screen-profile h2,
+#screen-ranking h2 {
+  /* TÍTULOS DE SEÇÃO DAS TELAS INTERNAS:
+     Padroniza cor e margem inferior dos títulos h2 das telas. */
+  margin-bottom: 14px;
+  color: var(--texto-claro);
+}
+
+.menu-user-banner {
+  /* FAIXA DE IDENTIFICAÇÃO DO JOGADOR NO MENU PRINCIPAL:
+     Exibe a foto de perfil e o nome do jogador logado acima do botão Iniciar Quiz. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--borda-sutil);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+#screen-profile {
+  /* TELA DE PERFIL DO JOGADOR (#screen-profile):
+     Limita a largura do painel de perfil a 580px. */
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.profile-header-box {
+  /* CABEÇALHO DO PERFIL DO JOGADOR (Tela de Perfil):
+     Exibe o avatar ampliado, nome da conta e total de partidas jogadas. */
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--borda-sutil);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.profile-avatar-large {
+  /* AVATAR AMPLIADO NA TELA DE PERFIL:
+     Aumenta o círculo do avatar para 72px na tela de estatísticas do jogador. */
+  width: 72px;
+  height: 72px;
+  font-size: 2rem;
+  border: 3px solid var(--btn-amarelo);
+}
+
+.profile-header-details h3 {
+  /* NOME DO JOGADOR NA TELA DE PERFIL:
+     Destaca o nome da conta salva. */
+  font-size: 1.25rem;
+  color: var(--texto-claro);
+  margin-bottom: 4px;
+}
+
+.profile-header-details p {
+  /* CONTADOR DE PARTIDAS NA TELA DE PERFIL:
+     Mostra quantas partidas completas o jogador já finalizou. */
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+}
+
+.profile-stats-grid {
+  /* GRADE DE ESTATÍSTICAS DO PERFIL (Última Pontuação, Mais Alta, Taxa de Acerto):
+     Organiza os 3 indicadores solicitados em 3 colunas iguais. */
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  /* CARTÃO INDIVIDUAL DE ESTATÍSTICA (Tela de Perfil):
+     Fundo escuro com borda roxa para destacar cada métrica do jogador. */
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--borda-sutil);
+  border-radius: 12px;
+  padding: 16px 10px;
+  text-align: center;
+}
+
+.stat-label {
+  /* RÓTULO DA ESTATÍSTICA (Tela de Perfil):
+     Texto descritivo pequeno acima do número (ex: "Taxa de Acerto"). */
+  display: block;
+  font-size: 0.78rem;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  /* VALOR NUMÉRICO DA ESTATÍSTICA (Tela de Perfil):
+     Destaca a pontuação ou porcentagem em amarelo dourado. */
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--btn-amarelo);
+}
+
+#screen-rules,
+#screen-credits {
+  /* TELAS DE REGRAS E CRÉDITOS:
+     Define largura máxima de 650px para leitura confortável. */
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.rules-list {
+  /* LISTA DE REGRAS DO JOGO (Tela de Regras):
+     Define espaçamento entre os tópicos das regras de pontuação e ajudas. */
+  padding-left: 22px;
+  line-height: 1.65;
+  margin: 18px 0 22px;
+  color: var(--texto-suave);
+}
+
+.rules-list li {
+  /* ITEM INDIVIDUAL DA LISTA DE REGRAS:
+     Adiciona margem inferior entre cada regra. */
+  margin-bottom: 8px;
+}
+
+.rules-list strong,
+#screen-credits strong {
+  /* DESTAQUES EM NEGRITO NAS REGRAS E CRÉDITOS:
+     Garante contraste branco puro para palavras-chave. */
+  color: var(--texto-claro);
+}
+
+#screen-credits p {
+  /* PARÁGRAFOS DA TELA DE CRÉDITOS:
+     Espaça os nomes dos integrantes e disciplinas. */
+  margin: 12px 0;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+.quiz-topbar {
+  /* BARRA SUPERIOR DURANTE A PARTIDA (Tela do Quiz):
+     Alinha o cronômetro da questão, o tempo total e o botão Abandonar Quiz. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.timer-pill {
+  /* CRONÔMETRO REGRESSIVO DE 20 SEGUNDOS (Tela do Quiz):
+     Pílula com borda amarela dourada mostrando os segundos restantes. */
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--btn-amarelo);
+  color: var(--btn-amarelo);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.timer-pill.timer-warning {
+  /* ALERTA DE TEMPO ACABANDO (5 segundos ou menos):
+     Muda o cronômetro para vermelho vibrante com animação pulsante. */
+  background-color: var(--cor-erro);
+  border-color: var(--cor-erro);
+  color: #FFFFFF;
+  animation: timerPulse 1s infinite;
+}
+
+@keyframes timerPulse {
+  /* ANIMAÇÃO DE PULSO DO CRONÔMETRO:
+     Alterna a opacidade nos últimos 5 segundos para alertar o jogador. */
+  50% {
+    /* PONTO MÉDIO DA ANIMAÇÃO:
+       Reduz a opacidade para 65% no meio do ciclo de 1 segundo. */
+    opacity: 0.65;
+  }
+}
+
+.timer-total {
+  /* CRONÔMETRO GLOBAL ACUMULATIVO (Tela do Quiz):
+     Exibe o tempo total decorrido desde o início da partida. */
+  color: var(--texto-suave);
+  font-size: 0.92rem;
+}
+
+.btn-abandon {
+  /* BOTÃO ABANDONAR QUIZ (Barra superior do Quiz):
+     Permite sair da partida em andamento mediante confirmação. */
+  border: 1px solid var(--cor-erro);
+  color: #FCA5A5;
+  background-color: var(--cor-erro-bg);
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-abandon:hover {
+  /* HOVER DO BOTÃO ABANDONAR QUIZ:
+     Preenche o botão em vermelho sólido ao passar o mouse. */
+  background-color: var(--cor-erro);
+  color: #FFFFFF;
+}
+
+.quiz-layout {
+  /* GRADE PRINCIPAL DA TELA DE JOGO (Pergunta à esquerda + Sidebar à direita):
+     Divide a tela do quiz em coluna principal flexível e barra lateral de 300px. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: 24px;
 }
 
 .quiz-main-area {
-  background-color: #f8fafc;
+  /* ÁREA DA PERGUNTA E ALTERNATIVAS (Esquerda da tela do Quiz):
+     Container escuro que abriga o tema, enunciado, 4 opções e explicação. */
+  background-color: var(--bg-bloco);
   padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  border: 1px solid var(--borda-sutil);
   min-width: 0;
 }
 
 .question-badge-header {
+  /* CABEÇALHO DA QUESTÃO (Tópico, Número e Pontuação da Pergunta):
+     Exibe acima do enunciado o tema, progresso (ex: 01 de 32) e pontos. */
   font-size: 0.82rem;
   font-weight: 700;
-  color: #475569;
+  color: var(--btn-amarelo);
   margin-bottom: 16px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
 }
 
 .points-tag {
-  color: #64748b;
+  /* ETIQUETA DE PONTOS DA QUESTÃO (Tela do Quiz):
+     Mostra "(Vale até 3 pontos)" ou "(Vale até 5 pontos)" em cor suave. */
+  color: var(--texto-suave);
 }
 
 .question-title {
-  font-size: 1.25rem;
+  /* ENUNCIADO DA PERGUNTA (Tela do Quiz):
+     Texto principal da questão em destaque branco. */
+  font-size: 1.22rem;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 24px;
-  line-height: 1.4;
+  color: var(--texto-claro);
+  margin-bottom: 22px;
+  line-height: 1.45;
 }
 
-/* ALTERNATIVAS */
 .options-container {
+  /* LISTA VERTICAL DAS 4 ALTERNATIVAS (Tela do Quiz):
+     Organiza os botões A, B, C e D em coluna com espaçamento uniforme. */
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .option-btn {
-  background: #fff;
-  border: 1px solid #cbd5e1;
+  /* BOTÃO DE ALTERNATIVA DE RESPOSTA (A, B, C, D):
+     Balão retangular com bordas arredondadas para cada opção de resposta. */
+  background-color: var(--bg-cartao);
+  border: 1px solid var(--borda-sutil);
   border-radius: 12px;
   padding: 14px 18px;
   text-align: left;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #334155;
+  color: var(--texto-claro);
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   line-height: 1.4;
 }
 
 .option-btn:hover:not(:disabled) {
-  border-color: #ff6b35;
-  background-color: #fff7f5;
+  /* HOVER DA ALTERNATIVA DE RESPOSTA:
+     Destaca a borda em amarelo dourado antes de o jogador clicar. */
+  border-color: var(--btn-amarelo);
+  background-color: #2B2454;
 }
 
 .option-btn:disabled {
+  /* ALTERNATIVA TRAVADA APÓS RESPOSTA:
+     Impede novos cliques depois que o usuário já escolheu uma opção. */
   cursor: default;
-  opacity: 1;
 }
 
-/* RESPOSTA CORRETA: VERDE */
 .option-btn.correct-answer {
-  border: 2px solid #16a34a;
-  background-color: #dcfce7;
-  color: #166534;
+  /* ALTERNATIVA CORRETA (Verde):
+     Destaca a resposta certa em verde após o clique ou uso da ajuda "Mostrar correta". */
+  border: 2px solid var(--cor-acerto);
+  background-color: var(--cor-acerto-bg);
+  color: #86EFAC;
 }
 
-/* RESPOSTA ERRADA ESCOLHIDA: VERMELHO */
 .option-btn.wrong-answer {
-  border: 2px solid #dc2626;
-  background-color: #fee2e2;
-  color: #991b1b;
+  /* ALTERNATIVA ERRADA SELECIONADA (Vermelho):
+     Destaca em vermelho a opção incorreta clicada pelo jogador. */
+  border: 2px solid var(--cor-erro);
+  background-color: var(--cor-erro-bg);
+  color: #FCA5A5;
 }
 
-/* PAINEL DE EXPLICAÇÃO */
 .answer-feedback {
+  /* PAINEL DE EXPLICAÇÃO PÓS-RESPOSTA (Tela do Quiz):
+     Exibe a justificativa técnica completa e o botão "Próxima Pergunta". */
   margin-top: 18px;
   padding: 16px;
-  border-radius: 10px;
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid var(--borda-sutil);
+  background-color: var(--bg-cartao);
 }
 
 .answer-feedback[hidden] {
+  /* ESTADO OCULTO DO PAINEL DE EXPLICAÇÃO:
+     Mantém o painel escondido enquanto o jogador ainda não respondeu. */
   display: none !important;
 }
 
 .answer-feedback h3 {
+  /* TÍTULO DO FEEDBACK ("Resposta correta!" ou "Resposta incorreta!"):
+     Define tamanho e margem do título do painel explicativo. */
   margin-bottom: 8px;
   font-size: 1rem;
 }
 
 .answer-feedback p {
+  /* TEXTO DA EXPLICAÇÃO TÉCNICA DA QUESTÃO:
+     Exibe o porquê da resposta correta com leitura confortável. */
   margin-bottom: 12px;
   line-height: 1.6;
   font-size: 0.92rem;
+  color: var(--texto-suave);
 }
 
 .answer-feedback.is-correct {
-  border-color: #86efac;
-  background: #f0fdf4;
+  /* PAINEL DE EXPLICAÇÃO EM CASO DE ACERTO:
+     Aplica borda e fundo esverdeado ao painel de justificativa. */
+  border-color: var(--cor-acerto);
+  background-color: var(--cor-acerto-bg);
 }
 
 .answer-feedback.is-correct h3 {
-  color: #166534;
+  /* TÍTULO VERDE DO PAINEL EM CASO DE ACERTO:
+     Destaca a mensagem de pontos ganhos em verde claro. */
+  color: #86EFAC;
 }
 
 .answer-feedback.is-wrong {
-  border-color: #fca5a5;
-  background: #fef2f2;
+  /* PAINEL DE EXPLICAÇÃO EM CASO DE ERRO OU TEMPO ESGOTADO:
+     Aplica borda e fundo avermelhado ao painel de justificativa. */
+  border-color: var(--cor-erro);
+  background-color: var(--cor-erro-bg);
 }
 
 .answer-feedback.is-wrong h3 {
-  color: #991b1b;
+  /* TÍTULO VERMELHO DO PAINEL EM CASO DE ERRO:
+     Destaca o aviso de erro em vermelho claro. */
+  color: #FCA5A5;
 }
 
-/* PAINEL LATERAL */
 .quiz-sidebar {
+  /* BARRA LATERAL DO QUIZ (Ranking + Status do Jogador + Ajudas):
+     Organiza os dois blocos laterais em coluna. */
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .sidebar-box {
-  background: #e2e8f0;
-  border-radius: 12px;
+  /* CAIXA PADRÃO DA BARRA LATERAL:
+     Estiliza o fundo e as bordas dos blocos de Ranking e de Ajudas. */
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--borda-sutil);
+  border-radius: 14px;
   padding: 18px;
 }
 
 .ranking-box h3 {
-  font-size: 0.85rem;
+  /* TÍTULO DO BLOCO DE RANKING:
+     Destaca o título do ranking em rosa/magenta vibrante. */
+  font-size: 0.88rem;
   font-weight: 800;
-  color: #334155;
-  margin-bottom: 10px;
+  color: var(--btn-rosa);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
 }
 
-.ranking-box ol {
+.ranking-list-clean {
+  /* LISTA ORDENADA DO RANKING (Sidebar e Tela Ranking Geral):
+     Remove marcadores padrão para exibir cartões personalizados com foto. */
   list-style: none;
-  font-size: 0.9rem;
-  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.ranking-box li {
-  margin-bottom: 6px;
+.ranking-item {
+  /* CARTÃO DE CADA JOGADOR NO RANKING (Foto + Nome + Pontuação + Tempo):
+     Exibe horizontalmente a posição, avatar, nome, pontos e tempo concluído. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: var(--bg-cartao);
+  border: 1px solid var(--borda-sutil);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+}
+
+.ranking-player-info {
+  /* LADO ESQUERDO DO ITEM DE RANKING (Posição + Foto + Nome):
+     Alinha a foto de perfil redonda ao lado do nome do jogador. */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ranking-avatar-mini {
+  /* MINIATURA DA FOTO DE PERFIL NO RANKING (28px x 28px):
+     Versão compacta do avatar para caber na lista do ranking. */
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+  border: 1px solid var(--btn-amarelo);
+  flex-shrink: 0;
+}
+
+.ranking-player-name {
+  /* NOME DO JOGADOR NO RANKING:
+     Corta com reticências (...) caso o nome seja muito longo. */
+  font-weight: 700;
+  color: var(--texto-claro);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranking-player-stats {
+  /* LADO DIREITO DO ITEM DE RANKING (Pontuação e Tempo de Conclusão):
+     Mostra os pontos em amarelo dourado e o tempo logo abaixo. */
+  text-align: right;
+  flex-shrink: 0;
+  color: var(--btn-amarelo);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.ranking-player-stats small {
+  /* TEMPO DE CONCLUSÃO NO ITEM DE RANKING:
+     Exibe o tempo formatado (MM:SS) abaixo da pontuação. */
+  display: block;
+  color: var(--texto-suave);
+  font-weight: 400;
+  font-size: 0.72rem;
 }
 
 .player-status-box {
+  /* CAIXA DE STATUS E AJUDAS DO JOGADOR (Barra lateral do Quiz):
+     Agrupa os dados do jogador ativo, pontuação atual e botões de ajuda. */
   font-size: 0.88rem;
-  color: #334155;
+  color: var(--texto-suave);
 }
 
-.player-status-box p {
-  margin-bottom: 8px;
+.sidebar-player-header {
+  /* CABEÇALHO DO JOGADOR NA BARRA LATERAL:
+     Mostra o avatar e o nome do jogador durante a partida. */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .current-score-text {
+  /* PLACAR DE PONTUAÇÃO ATUAL (Barra lateral do Quiz):
+     Exibe a pontuação corrida do jogador em destaque. */
   font-weight: 700;
+  color: var(--texto-claro);
+  margin-bottom: 10px;
 }
 
 .help-system-title {
-  font-size: 0.8rem;
-  font-weight: 600;
+  /* TÍTULO DA SEÇÃO DE AJUDAS (Barra lateral do Quiz):
+     Identifica o bloco "AJUDAS DISPONÍVEIS". */
+  font-size: 0.78rem;
+  font-weight: 700;
   margin-top: 12px;
   margin-bottom: 8px;
-  color: #475569;
+  color: var(--texto-suave);
 }
 
-.help-buttons {
+.help-buttons-stack {
+  /* PILHA VERTICAL DOS 3 BOTÕES DE AJUDA:
+     Empilha "Pular", "Remover 2" e "Mostrar correta". */
   display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
 .btn-help {
-  flex: 1;
-  background-color: #ff6b35;
-  color: #fff;
+  /* BOTÕES DE AJUDA DO JOGO (Pular, Remover 2, Mostrar correta):
+     Usa o violeta da paleta para diferenciar das alternativas de resposta. */
+  background-color: var(--btn-violeta);
+  color: #FFFFFF;
   border: none;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
+  min-height: 38px;
+  transition: opacity 0.2s;
 }
 
 .btn-help:hover:not(:disabled) {
-  opacity: 0.9;
+  /* HOVER DOS BOTÕES DE AJUDA:
+     Aplica leve transparência ao passar o mouse enquanto disponível. */
+  opacity: 0.88;
 }
 
 .btn-help:disabled {
-  background-color: #94a3b8;
+  /* BOTÃO DE AJUDA ESGOTADO OU BLOQUEADO:
+     Fica escuro e desativado quando os usos acabam ou após responder. */
+  background-color: #2B2552;
+  color: #6B6594;
   cursor: not-allowed;
 }
 
-/* RESULTADO FINAL */
 #screen-feedback {
-  max-width: 440px;
+  /* TELA FINAL DE RESULTADO (#screen-feedback):
+     Centraliza e limita o resumo pós-jogo a 540px. */
+  max-width: 540px;
   text-align: center;
-  border: 1px solid #e2e8f0;
 }
 
 .feedback-badge {
+  /* ETIQUETA SUPERIOR DA TELA FINAL:
+     Exibe "FEEDBACK DETALHADO" em rosa/magenta. */
   font-size: 0.75rem;
   font-weight: 800;
-  color: #475569;
-  letter-spacing: 0.5px;
+  color: var(--btn-rosa);
+  letter-spacing: 0.8px;
 }
 
 .feedback-card h2 {
+  /* TÍTULO "RESULTADO FINAL" (Tela Final):
+     Destaca o cabeçalho do resumo da partida. */
   font-size: 1.8rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--texto-claro);
   margin: 10px 0 15px;
 }
 
 .score-highlight {
-  font-size: 1.1rem;
+  /* PLACAR FINAL DA PARTIDA (Tela Final):
+     Exibe "SEU SCORE: X pts" em amarelo dourado. */
+  font-size: 1.3rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--btn-amarelo);
   margin-bottom: 15px;
 }
 
 .bonus-box {
-  background-color: #f1f5f9;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
+  /* CAIXA DE PONTOS BÔNUS (Tela Final):
+     Mostra quantos pontos extras foram obtidos nas perguntas surpresa. */
+  background-color: var(--bg-bloco);
+  border: 1px solid var(--borda-sutil);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.88rem;
   margin-bottom: 15px;
 }
 
 .summary-details {
+  /* DETALHES DE TEMPO E POSIÇÃO (Tela Final):
+     Mostra o tempo final da partida e status de gravação no ranking. */
   text-align: left;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   margin-bottom: 15px;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: var(--texto-suave);
 }
 
 .answers-review {
+  /* ÁREA DE REVISÃO QUESTÃO POR QUESTÃO (Tela Final):
+     Container da lista rolável com acertos, erros e explicações. */
   text-align: left;
   margin-bottom: 20px;
 }
 
 .answers-review h3 {
-  font-size: 0.9rem;
-  color: #0f172a;
+  /* TÍTULO DA REVISÃO DE RESPOSTAS (Tela Final):
+     Cabeçalho "Resumo das respostas:". */
+  font-size: 0.95rem;
+  color: var(--texto-claro);
 }
 
 .review-hint {
-  font-size: 0.75rem;
-  color: #64748b;
+  /* DICA ABAIXO DO TÍTULO DE REVISÃO (Tela Final):
+     Texto auxiliar "Confira seus acertos e erros.". */
+  font-size: 0.78rem;
+  color: var(--texto-suave);
   margin-bottom: 10px;
 }
 
 #answers-summary-list {
-  max-height: 200px;
+  /* LISTA ROLÁVEL DO RESUMO DAS RESPOSTAS (Tela Final):
+     Limita a altura a 220px com barra de rolagem interna para as 32 questões. */
+  max-height: 220px;
   overflow-y: auto;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   padding-left: 20px;
-  color: #334155;
+  color: var(--texto-suave);
 }
 
 #answers-summary-list li {
+  /* ITEM INDIVIDUAL DO RESUMO DAS RESPOSTAS (Tela Final):
+     Espaça cada questão revisada para facilitar a leitura. */
   margin-bottom: 10px;
   line-height: 1.5;
 }
 
-/* RODAPÉ */
 .main-footer {
+  /* RODAPÉ INSTITUCIONAL DO APLICATIVO:
+     Posiciona os créditos da disciplina na base da página. */
   margin-top: 30px;
   width: 100%;
   max-width: 960px;
@@ -453,71 +1102,85 @@ body {
 }
 
 .credits-box {
+  /* TEXTO DO RODAPÉ:
+     Define cor suave e tamanho discreto para as informações do rodapé. */
   font-size: 0.8rem;
-  color: #1e293b;
+  color: var(--texto-suave);
   line-height: 1.4;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 768px) {
+  /* ADAPTAÇÃO RESPONSIVA PARA CELULARES (Telas menores que 768px):
+     Reorganiza grades e tamanhos para caber confortavelmente em smartphones. */
+
   body {
+    /* ESPAÇAMENTO DO CORPO NO CELULAR:
+       Reduz a margem externa da tela em dispositivos móveis. */
     padding: 12px;
   }
 
   .main-header h1 {
-    font-size: 1.8rem;
+    /* TÍTULO PRINCIPAL NO CELULAR:
+       Reduz o tamanho da fonte do título para não quebrar em várias linhas. */
+    font-size: 1.75rem;
   }
 
   .card-screen {
+    /* CARTÃO DE TELA NO CELULAR:
+       Diminui o preenchimento interno para ganhar espaço útil. */
     padding: 18px;
   }
 
+  .menu-action-grid {
+    /* BOTÕES DO MENU NO CELULAR:
+       Empilha os botões do menu em 1 coluna no celular. */
+    grid-template-columns: 1fr;
+  }
+
   .quiz-layout {
+    /* LAYOUT DO QUIZ NO CELULAR:
+       Coloca a barra lateral (Ranking e Ajudas) abaixo da pergunta. */
     grid-template-columns: 1fr;
   }
 
   .quiz-main-area {
+    /* ÁREA DA PERGUNTA NO CELULAR:
+       Ajusta o espaçamento interno da caixa de perguntas. */
     padding: 16px;
   }
 
-  .quiz-sidebar {
-    display: grid;
+  .profile-stats-grid {
+    /* ESTATÍSTICAS DO PERFIL NO CELULAR:
+       Empilha os 3 cartões de métricas (Última, Mais Alta, Taxa) verticalmente. */
     grid-template-columns: 1fr;
   }
 
-  .question-title {
-    font-size: 1.1rem;
+  .avatar-grid {
+    /* GRADE DE AVATARES NO CELULAR:
+       Exibe os 6 avatares em 2 linhas de 3 colunas no celular. */
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .quiz-topbar {
+    /* BARRA SUPERIOR DO QUIZ NO CELULAR:
+       Estica os elementos da barra superior para caberem na largura da tela. */
+    align-items: stretch;
+  }
+
+  .btn-abandon {
+    /* BOTÃO ABANDONAR QUIZ NO CELULAR:
+       Ocupa 100% da largura na barra superior móvel. */
+    width: 100%;
   }
 
   .main-footer {
-    text-align: center;
-  }
+  /* RODAPÉ INSTITUCIONAL DO APLICATIVO:
+     Posiciona os créditos da disciplina na base da página sem cortar nas bordas. */
+  margin-top: 30px;
+  width: 100%;
+  max-width: 960px;
+  padding: 0 12px;
+  text-align: right;
+  word-wrap: break-word;
 }
-
-/* MELHORIAS: MENU, CRONÔMETRO E AJUDAS */
-.menu-card { max-width: 520px; margin: 0 auto; text-align: center; }
-.menu-card h2, #screen-rules h2, #screen-credits h2 { margin-bottom: 14px; color: #0f172a; }
-.menu-card .subtitle { margin-bottom: 22px; color: #64748b; }
-.btn-secondary {
-  width: 100%; margin-top: 10px; padding: 13px; border-radius: 8px;
-  border: 1px solid #cbd5e1; background: #f8fafc; color: #334155;
-  font-size: 1rem; font-weight: 700; cursor: pointer;
-}
-.btn-secondary:hover { background: #e2e8f0; }
-.rules-list { padding-left: 22px; line-height: 1.65; margin: 18px 0 22px; }
-.rules-list li { margin-bottom: 8px; }
-#screen-credits p { margin: 12px 0; line-height: 1.5; }
-.quiz-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
-.timer-pill { background: #0f172a; color: #fff; padding: 9px 13px; border-radius: 999px; font-weight: 800; }
-.timer-pill.timer-warning { background: #dc2626; animation: timerPulse 1s infinite; }
-.timer-total { color: #475569; font-size: .9rem; }
-.btn-abandon { border: 1px solid #dc2626; color: #b91c1c; background: #fff; padding: 9px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-.btn-abandon:hover { background: #fef2f2; }
-.help-buttons-stack { flex-direction: column; }
-.btn-help { min-height: 38px; }
-#screen-rules, #screen-credits { max-width: 650px; }
-@keyframes timerPulse { 50% { opacity: .65; } }
-@media (max-width: 768px) {
-  .quiz-topbar { align-items: stretch; }
-  .btn-abandon { width: 100%; }
 }
