@@ -2,6 +2,7 @@
    BASE DE PERGUNTAS DO CYBER ARENA (30 Normais + 2 Bônus = 100 Pontos)
    100% em JavaScript puro, sem necessidade de servidor externo ou SQL.
    ========================================================================== */
+   const API_URL = "https://projeto-quiz-szgx.onrender.com";
 const questionsData = [
   { id: 1, topic: "Streaming, jogos online e gamification", question: "Que tipo de serviço plataformas como Netflix, Disney+ e Spotify oferecem?", options: ["Serviços de armazenamento local de arquivos", "Serviços exclusivos de edição de documentos", "Serviços de hospedagem de sites", "Serviços de streaming (de áudio e vídeo)"], answer: 3, isBonus: false, explanation: "Netflix, Disney+ e Spotify distribuem conteúdo pela internet para reprodução sob demanda." },
   { id: 2, topic: "Streaming, jogos online e gamification", question: "O que é indispensável para conseguir jogar um jogo online multiplayer?", options: ["Uma placa de vídeo dedicada", "Uma conta em rede social", "Conexão com a internet", "Um controle sem fio"], answer: 2, isBonus: false, explanation: "O multiplayer online depende da comunicação entre o dispositivo do jogador e os servidores ou demais participantes pela rede." },
@@ -99,7 +100,7 @@ let currentQuestionIndex = 0;
 let userScore = 0;
 let bonusPointsEarned = 0;
 let userAnswers = [];
-let userData = { name: "", avatar: "av-1", isGuest: false };
+let userData = { id: null, name: "", avatar: "av-1", isGuest: false };
 let timerInterval = null;
 let secondsElapsed = 0;
 let questionSeconds = 20;
@@ -214,7 +215,7 @@ function shuffleArray(options, correctIndex) {
 /* ==========================================================================
    AUTENTICAÇÃO, MODO CONVIDADO E PERFIL DO JOGADOR
    ========================================================================== */
-function handleStartQuiz(event) {
+async function handleStartQuiz(event) {
   event.preventDefault();
   const name = document.getElementById("input-name").value.trim();
   const password = document.getElementById("input-password").value.trim();
@@ -231,56 +232,46 @@ function handleStartQuiz(event) {
     return;
   }
 
-  const users = getStoredUsers();
-  const key = name.toLowerCase();
+  try {
+    const response = await fetch(`${API_URL}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome_usuario: name,
+        senha: password,
+        avatar: selectedAvatar
+      })
+    });
 
-  if (users[key]) {
-    if (users[key].password !== password) {
-      alert("Senha incorreta para este usuário!");
+    const data = await response.json();
+    if (!response.ok) {
+      alert(data.error || "Erro ao fazer login.");
       return;
     }
 
-    // Se o usuário escolheu uma nova imagem na tela de login, atualiza; se não mantém a salva
     const finalAvatar = userManuallyClickedAvatarOnLogin
       ? selectedAvatar
-      : (users[key].avatar || selectedAvatar);
-
-    users[key].avatar = finalAvatar;
-    saveStoredUsers(users);
+      : (data.avatar || selectedAvatar);
 
     userData = {
-      name: users[key].name,
+      id: data.id_jogador,
+      name: data.nome_usuario,
       avatar: finalAvatar,
       isGuest: false
     };
-  } else {
-    users[key] = {
-      name,
-      password,
-      avatar: selectedAvatar,
-      lastScore: 0,
-      bestScore: 0,
-      totalCorrect: 0,
-      totalAnswered: 0,
-      gamesPlayed: 0
-    };
-    saveStoredUsers(users);
-    userData = { name, avatar: selectedAvatar, isGuest: false };
+
+    userManuallyClickedAvatarOnLogin = false;
+    selecionarRadioAvatar("avatar", userData.avatar);
+    selecionarRadioAvatar("profile-avatar", userData.avatar);
+
+    atualizarInterfaceUsuario();
+    await renderRankingLists();
+    showScreen("screen-menu");
+  } catch (err) {
+    console.error("Erro de conexão com o servidor:", err);
+    alert("Não foi possível conectar ao servidor. Aguarde alguns segundos e tente novamente.");
   }
-
-  // Salva o último usuário conectado para já trazer a imagem selecionada no próximo acesso
-  localStorage.setItem(STORAGE_LAST_USER_KEY, key);
-  userManuallyClickedAvatarOnLogin = false;
-
-  // Garante que a tela de login e a tela de perfil já fiquem sincronizadas com o avatar escolhido
-  selecionarRadioAvatar("avatar", userData.avatar);
-  selecionarRadioAvatar("profile-avatar", userData.avatar);
-
-  atualizarInterfaceUsuario();
-  renderRankingLists();
-  showScreen("screen-menu");
 }
-
 function startAsGuest(event) {
   event?.preventDefault();
   userData = { name: "Convidado", avatar: "av-guest", isGuest: true };
@@ -311,29 +302,33 @@ function atualizarInterfaceUsuario() {
   }
 }
 
-function openProfileScreen() {
-  if (userData.isGuest) {
+async function openProfileScreen() {
+  if (userData.isGuest || !userData.id) {
     alert("Crie uma conta salva para acessar os dados do Perfil.");
     return;
   }
 
-  const users = getStoredUsers();
-  const account = users[userData.name.toLowerCase()];
-  if (!account) return;
+  try {
+    const response = await fetch(`${API_URL}/api/jogador/${userData.id}`);
+    const account = await response.json();
+    if (!response.ok) {
+      alert(account.error || "Erro ao carregar perfil.");
+      return;
+    }
 
-  const accuracy = account.totalAnswered > 0
-    ? Math.round((account.totalCorrect / account.totalAnswered) * 100)
-    : 0;
+    applyAvatarBadge(document.getElementById("profile-avatar-display"), account.avatar || userData.avatar, "profile-avatar-large");
+    document.getElementById("profile-username").textContent = account.nome_usuario;
+    document.getElementById("profile-games-count").textContent = `Partidas concluídas: ${account.total_partidas || 0}`;
+    document.getElementById("profile-last-score").textContent = `${account.ultima_pontuacao || 0} pts`;
+    document.getElementById("profile-best-score").textContent = `${account.maior_pontuacao || 0} pts`;
+    document.getElementById("profile-accuracy-rate").textContent = "-";
 
-  applyAvatarBadge(document.getElementById("profile-avatar-display"), account.avatar, "profile-avatar-large");
-  document.getElementById("profile-username").textContent = account.name;
-  document.getElementById("profile-games-count").textContent = `Partidas concluídas: ${account.gamesPlayed}`;
-  document.getElementById("profile-last-score").textContent = `${account.lastScore} pts`;
-  document.getElementById("profile-best-score").textContent = `${account.bestScore} pts`;
-  document.getElementById("profile-accuracy-rate").textContent = `${accuracy}%`;
-
-  selecionarRadioAvatar("profile-avatar", account.avatar);
-  showScreen("screen-profile");
+    selecionarRadioAvatar("profile-avatar", account.avatar || userData.avatar);
+    showScreen("screen-profile");
+  } catch (err) {
+    console.error("Erro ao buscar perfil:", err);
+    alert("Erro ao carregar histórico do jogador.");
+  }
 }
 
 function saveNewAvatar() {
@@ -396,41 +391,47 @@ function atualizarRankingComPartida(name, avatar, score, timeSeconds) {
   saveStoredRanking(ranking.slice(0, 10));
 }
 
-function renderRankingLists() {
-  const ranking = getStoredRanking();
+async function renderRankingLists() {
   const containers = [
     document.getElementById("ranking-list"),
     document.getElementById("full-ranking-list")
   ];
 
-  containers.forEach(list => {
-    if (!list) return;
-    list.innerHTML = "";
+  try {
+    const response = await fetch(`${API_URL}/api/ranking`);
+    const ranking = await response.json();
 
-    if (ranking.length === 0) {
-      list.innerHTML = "<li class='ranking-item'>Nenhuma partida registrada ainda.</li>";
-      return;
-    }
+    containers.forEach(list => {
+      if (!list) return;
+      list.innerHTML = "";
 
-    ranking.forEach((item, index) => {
-      const cfg = AVATAR_CONFIG[item.avatar] || AVATAR_CONFIG["av-1"];
-      const li = document.createElement("li");
-      li.className = "ranking-item";
+      if (!Array.isArray(ranking) || ranking.length === 0) {
+        list.innerHTML = "<li class='ranking-item'>Nenhuma partida registrada ainda.</li>";
+        return;
+      }
 
-      li.innerHTML = `
-        <div class="ranking-player-info">
-          <strong>#${index + 1}</strong>
-          <span class="avatar-badge ${cfg.className} ranking-avatar-mini">${cfg.icon}</span>
-          <span class="ranking-player-name">${item.name}</span>
-        </div>
-        <div class="ranking-player-stats">
-          ${item.score} pts
-          <small>Tempo: ${formatTime(item.timeSeconds)}</small>
-        </div>
-      `;
-      list.appendChild(li);
+      ranking.forEach((item, index) => {
+        const cfg = AVATAR_CONFIG[item.avatar] || AVATAR_CONFIG["av-1"];
+        const li = document.createElement("li");
+        li.className = "ranking-item";
+
+        li.innerHTML = `
+          <div class="ranking-player-info">
+            <strong>#${index + 1}</strong>
+            <span class="avatar-badge ${cfg.className} ranking-avatar-mini">${cfg.icon}</span>
+            <span class="ranking-player-name">${item.nome_usuario}</span>
+          </div>
+          <div class="ranking-player-stats">
+            ${item.pontuacao_total} pts
+            <small>Tempo: ${formatTime(item.tempo_segundos)}</small>
+          </div>
+        `;
+        list.appendChild(li);
+      });
     });
-  });
+  } catch (err) {
+    console.error("Erro ao carregar ranking:", err);
+  }
 }
 
 /* ==========================================================================
@@ -776,6 +777,27 @@ function finishQuiz() {
   } else {
     document.getElementById("ranking-position").textContent = "Modo Convidado (não salvo no ranking)";
   }
+  if (!userData.isGuest && userData.id) {
+  const totalAjudasUsadas = (3 - helpCounts.skip) + (2 - helpCounts.remove) + (1 - helpCounts.reveal);
+
+  fetch(`${API_URL}/api/partidas`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id_jogador: userData.id,
+      pontuacao_total: userScore,
+      pontos_bonus: bonusPointsEarned,
+      tempo_segundos: secondsElapsed,
+      ajudas_usadas: totalAjudasUsadas
+    })
+  })
+    .then(() => renderRankingLists())
+    .catch(err => console.error("Erro ao salvar partida:", err));
+
+  document.getElementById("ranking-position").textContent = "Registrado no Ranking Oficial";
+} else {
+  document.getElementById("ranking-position").textContent = "Modo Convidado (não salvo no ranking)";
+}
 }
 
 function restartQuiz() {
